@@ -17,6 +17,8 @@ import workspaceImg5 from '../assets/images/regenerated_image_1783754627267.png'
 import workspaceImg6 from '../assets/images/regenerated_image_1783754651963.png';
 import workspaceImg7 from '../assets/images/regenerated_image_1783754342182.png';
 import workspaceImg8 from '../assets/images/regenerated_image_1783754344326.png';
+import regeneratedProjectImg from '../assets/images/regenerated_image_1783758616892.png';
+import regeneratedBlogImg from '../assets/images/regenerated_image_1783758620144.png';
 
 interface HomeProps {
   language: Language;
@@ -281,7 +283,7 @@ export default function Home({ language, setActiveTab }: HomeProps) {
       title_en: "Historical Dematerialization - National Press",
       category_pt: "ARQUIVO DIGITAL",
       category_en: "DIGITAL ARCHIVE",
-      img: "https://images.unsplash.com/photo-1457369804613-52c61a465e7d?q=80&w=600&auto=format&fit=crop"
+      img: regeneratedProjectImg
     },
     {
       title_pt: "Plataforma SIPPO - Propriedade Industrial",
@@ -346,7 +348,7 @@ export default function Home({ language, setActiveTab }: HomeProps) {
       date_en: "March 10, 2026",
       desc_pt: "Os desafios técnicos da custódia, higienização e indexação digital de Diários da República e registos centenários com plena validade legal.",
       desc_en: "The technical challenges of custodianship, sanitization, and digital indexing of century-old official gazettes with full legal validity.",
-      img: "https://images.unsplash.com/photo-1457369804613-52c61a465e7d?q=80&w=600&auto=format&fit=crop"
+      img: regeneratedBlogImg
     }
   ];
 
