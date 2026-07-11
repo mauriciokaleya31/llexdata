@@ -142,72 +142,246 @@ export default function About({ language }: AboutProps) {
 
         {/* 1. Who We Are Presentation */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24">
-          <div className="lg:col-span-7 space-y-6">
-            <h3 className="text-2xl font-bold text-brand-deep">
-              {language === 'pt' ? "Modernização de Acervos com Rigor Estatal" : "State-Backed Modernization of Historical Archives"}
-            </h3>
-            <p className="text-gray-600 leading-relaxed text-base">
-              {language === 'pt' ? (
-                "A LEXDATA, LDA é uma empresa de capitais maioritariamente públicos, detidos pela Imprensa Nacional - E.P. Atuamos como um motor de modernização e desmaterialização de processos, garantindo a preservação e valorização de toda a informação corporativa, técnica e jurídica de Angola."
-              ) : (
-                "LEXDATA, LDA is a company with majority public capital, held by Imprensa Nacional - E.P. We act as a driving force for process modernization and dematerialization, ensuring the preservation and value of Angola's corporate, technical, and legal information."
-              )}
-            </p>
+          <div className="lg:col-span-6 space-y-6">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="space-y-4"
+            >
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-brand-deep font-sans">
+                {language === 'pt' ? "Modernização de Acervos com Rigor Estatal" : "State-Backed Modernization of Historical Archives"}
+              </h3>
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                {language === 'pt' ? (
+                  "A LEXDATA, LDA é uma empresa de capitais maioritariamente públicos, detidos pela Imprensa Nacional - E.P. Atuamos como um motor de modernização e desmaterialização de processos, garantindo a preservação e valorização de toda a informação corporativa, técnica e jurídica de Angola."
+                ) : (
+                  "LEXDATA, LDA is a company with majority public capital, held by Imprensa Nacional - E.P. We act as a driving force for process modernization and dematerialization, ensuring the preservation and value of Angola's corporate, technical, and legal information."
+                )}
+              </p>
+              <p className="text-gray-600 leading-relaxed text-sm">
+                {language === 'pt' ? (
+                  "Através da nossa engenharia documental proprietária e equipa de juristas especializados, transformamos arquivos físicos estáticos em repositórios dinâmicos e indexados, prontos para a tomada de decisão rápida e segura."
+                ) : (
+                  "Through our proprietary document engineering and specialized team of legal scholars, we transform static physical archives into dynamic, indexed repositories ready for swift and secure decision-making."
+                )}
+              </p>
+            </motion.div>
             
-            <div className="p-6 bg-brand-deep/5 rounded-2xl border border-brand-deep/10">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="p-6 bg-brand-deep/5 rounded-2xl border border-brand-deep/10"
+            >
               <h4 className="text-sm font-bold text-brand-deep uppercase tracking-wider mb-2 flex items-center gap-2">
-                <Award className="w-4.5 h-4.5 text-brand-blue" />
+                <Award className="w-4.5 h-4.5 text-brand-blue animate-pulse" />
                 {language === 'pt' ? "Participação Pública Estratégica" : "Strategic Public Ownership"}
               </h4>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
                 {language === 'pt' ? (
                   "Como subsidiária oficial da Imprensa Nacional - E.P., a LEXDATA combina o prestígio e o rigor institucional público com a agilidade das modernas tecnologias de informação para fornecer soluções com garantia de total confidencialidade e segurança legal."
                 ) : (
                   "As an official subsidiary of Imprensa Nacional - E.P., LEXDATA combines public institutional prestige and rigor with modern IT agility to deliver solutions with absolute confidentiality and legal security."
                 )}
               </p>
-            </div>
+            </motion.div>
           </div>
 
-          <div className="lg:col-span-5">
-            <div className="bg-gradient-to-br from-brand-deep to-slate-900 p-8 rounded-3xl text-white shadow-xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 -mr-16 -mt-16 w-36 h-36 rounded-full bg-brand-blue/15" />
-              <Building2 className="w-10 h-10 text-brand-blue mb-4" />
-              <h4 className="font-bold text-lg mb-2">Estrutura de Acionistas</h4>
-              <p className="text-gray-300 text-xs leading-relaxed mb-6">
-                Combinando governança estatal sólida com flexibilidade para responder aos desafios de grandes empresas privadas e petrolíferas.
-              </p>
-              <div className="space-y-3">
-                <div className="flex justify-between text-xs border-b border-white/10 pb-2">
-                  <span className="text-gray-400">Imprensa Nacional E.P.</span>
-                  <span className="font-bold text-brand-blue">Acionista Maioritário</span>
-                </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-gray-400">Natureza Legal</span>
-                  <span className="font-bold">Capitais Públicos</span>
-                </div>
+          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-12 gap-4">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="sm:col-span-7 rounded-2xl overflow-hidden shadow-xl aspect-video sm:aspect-square relative group"
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" 
+                alt="Modern State Archiving Facilities" 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent flex items-end p-4">
+                <p className="text-white text-xs font-bold font-mono">
+                  {language === 'pt' ? "Salas de Digitalização Industrial" : "Industrial Scanning Labs"}
+                </p>
               </div>
+            </motion.div>
+
+            <div className="sm:col-span-5 space-y-4 flex flex-col justify-between">
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="bg-gradient-to-br from-brand-deep to-slate-900 p-6 rounded-2xl text-white shadow-lg relative overflow-hidden shrink-0"
+              >
+                <div className="absolute top-0 right-0 -mr-12 -mt-12 w-24 h-24 rounded-full bg-brand-blue/15" />
+                <Building2 className="w-8 h-8 text-brand-blue mb-3" />
+                <h4 className="font-bold text-xs sm:text-sm mb-1">{language === 'pt' ? "Governação Sólida" : "Solid Governance"}</h4>
+                <p className="text-gray-300 text-[10px] leading-relaxed">
+                  {language === 'pt' ? "Acionistas públicos e privados sob o selo de confiança nacional." : "Public-private governance model backed by national trust."}
+                </p>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="rounded-2xl overflow-hidden shadow-lg aspect-video sm:aspect-square relative group shrink-0"
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=600&auto=format&fit=crop" 
+                  alt="Document rehabilitation" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent flex items-end p-3">
+                  <p className="text-white text-[10px] font-bold">
+                    {language === 'pt' ? "Preservação Física" : "Physical Preservation"}
+                  </p>
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
 
+        {/* Strategic Pillars with Beautiful Images & Animations */}
+        <div className="mb-24 space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-[10px] font-mono tracking-widest uppercase text-brand-blue bg-brand-blue/10 px-2.5 py-1 rounded-full font-bold">
+              {language === 'pt' ? "Pilares Operacionais" : "Operational Pillars"}
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-brand-deep tracking-tight font-sans">
+              {language === 'pt' ? "Visão Estratégica & Tecnologia Aplicada" : "Strategic Vision & Applied Technology"}
+            </h3>
+            <p className="text-gray-500 text-xs sm:text-sm">
+              {language === 'pt' ? "Combinamos o tratamento documental físico tradicional com as mais recentes inovações digitais." : "We combine traditional physical document treatment with the latest digital innovations."}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="bg-white rounded-2xl border border-gray-150 overflow-hidden shadow-sm hover:shadow-md transition-shadow group"
+            >
+              <div className="h-48 overflow-hidden relative">
+                <img 
+                  src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?q=80&w=600&auto=format&fit=crop" 
+                  alt="Digitalização Industrial" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute top-4 left-4 bg-brand-blue text-white p-2 rounded-xl">
+                  <Zap className="w-5 h-5" />
+                </div>
+              </div>
+              <div className="p-6 space-y-3">
+                <h4 className="font-extrabold text-brand-deep text-base">
+                  {language === 'pt' ? "Digitalização de Alta Fidelidade" : "High-Fidelity Digitization"}
+                </h4>
+                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                  {language === 'pt' 
+                    ? "Utilização de scanners planetários e rotativos industriais de última geração capazes de processar acervos centenários sem danificar o papel original, convertendo-os em ficheiros de alta qualidade." 
+                    : "Use of cutting-edge planetary and industrial rotary scanners capable of processing century-old archives without damaging the original paper, turning them into high-quality files."}
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="bg-white rounded-2xl border border-gray-150 overflow-hidden shadow-sm hover:shadow-md transition-shadow group"
+            >
+              <div className="h-48 overflow-hidden relative">
+                <img 
+                  src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=600&auto=format&fit=crop" 
+                  alt="Análise Inteligente de Dados" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute top-4 left-4 bg-brand-blue text-white p-2 rounded-xl">
+                  <Network className="w-5 h-5" />
+                </div>
+              </div>
+              <div className="p-6 space-y-3">
+                <h4 className="font-extrabold text-brand-deep text-base">
+                  {language === 'pt' ? "Indexação Jurídica & Metadados" : "Legal Indexing & Metadata"}
+                </h4>
+                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                  {language === 'pt' 
+                    ? "Estruturação sistemática de Diários da República e diplomas regulatórios em Angola. Um corpo de juristas dedicados realiza análises temáticas para pesquisas rápidas e remissivas." 
+                    : "Systematic structuring of Official Gazettes and regulatory diplomas in Angola. A body of dedicated legal scholars performs thematic analysis for rapid, cross-referenced searches."}
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="bg-white rounded-2xl border border-gray-150 overflow-hidden shadow-sm hover:shadow-md transition-shadow group"
+            >
+              <div className="h-48 overflow-hidden relative">
+                <img 
+                  src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=600&auto=format&fit=crop" 
+                  alt="Cibersegurança Nacional" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute top-4 left-4 bg-brand-blue text-white p-2 rounded-xl">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+              </div>
+              <div className="p-6 space-y-3">
+                <h4 className="font-extrabold text-brand-deep text-base">
+                  {language === 'pt' ? "Soberania & Cibersegurança" : "Sovereignty & Cybersecurity"}
+                </h4>
+                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                  {language === 'pt' 
+                    ? "Arquitetura blindada contra vazamentos de dados ou ataques. Oferecemos redundância local em nuvem estatal angolana, garantindo conformidade absoluta com as diretivas nacionais." 
+                    : "Shielded architecture against data leaks or attacks. We offer local redundancy in an Angolan state cloud, ensuring absolute compliance with national directives."}
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
         {/* 2. Timeline (História) */}
-        <div className="mb-24 py-12 bg-gray-50 rounded-3xl px-8 border border-gray-100">
-          <div className="max-w-xl mb-10 space-y-2">
-            <h3 className="text-2xl font-bold text-brand-deep">A Nossa História</h3>
-            <p className="text-gray-500 text-xs">Clique nos marcos históricos para ler o detalhe do nosso trajeto.</p>
+        <div className="mb-24 py-12 bg-slate-900 text-white rounded-3xl px-8 border border-slate-800 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-blue/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="max-w-xl mb-10 space-y-2 relative z-10">
+            <span className="text-[10px] font-mono tracking-widest uppercase text-brand-blue bg-brand-blue/15 px-2.5 py-1 rounded-full font-bold">
+              {language === 'pt' ? "A Nossa Evolução" : "Our Evolution"}
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              {language === 'pt' ? "O Nosso Percurso Histórico" : "Our Historic Milestones"}
+            </h3>
+            <p className="text-gray-400 text-xs">
+              {language === 'pt' ? "Clique nos anos abaixo para navegar pela linha de tempo interativa da LEXDATA." : "Click on the years below to navigate through LEXDATA's interactive timeline."}
+            </p>
           </div>
 
           {/* Interactive years bar */}
-          <div className="flex justify-between items-center relative mb-8 border-b border-gray-200 pb-4 overflow-x-auto gap-4">
+          <div className="flex justify-between items-center relative mb-8 border-b border-white/10 pb-4 overflow-x-auto gap-4 relative z-10">
             {historyTimeline.map((item) => (
               <button
                 key={item.year}
                 onClick={() => setSelectedTimelineYear(item.year)}
-                className={`text-sm font-extrabold py-2 px-4 rounded-xl transition-all cursor-pointer shrink-0 ${
+                className={`text-sm font-extrabold py-2.5 px-5 rounded-xl transition-all cursor-pointer shrink-0 ${
                   selectedTimelineYear === item.year 
-                    ? 'bg-brand-blue text-white shadow-md' 
-                    : 'text-gray-500 hover:text-brand-deep'
+                    ? 'bg-brand-blue text-white shadow-lg scale-105' 
+                    : 'text-gray-400 hover:text-white hover:bg-white/5'
                 }`}
               >
                 {item.year}
@@ -221,22 +395,23 @@ export default function About({ language }: AboutProps) {
               return (
                 <motion.div
                   key={item.year}
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
-                  className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.3 }}
+                  className="bg-slate-950/80 p-8 rounded-2xl border border-white/5 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10"
                 >
-                  <div className="space-y-2">
-                    <span className="text-2xl font-mono font-extrabold text-brand-blue">{item.year}</span>
-                    <h4 className="text-lg font-bold text-brand-deep">
+                  <div className="space-y-3">
+                    <span className="text-3xl font-mono font-extrabold text-brand-blue">{item.year}</span>
+                    <h4 className="text-lg sm:text-xl font-bold text-white">
                       {language === 'pt' ? item.title_pt : item.title_en}
                     </h4>
-                    <p className="text-gray-600 text-xs md:text-sm leading-relaxed max-w-2xl">
+                    <p className="text-gray-300 text-xs sm:text-sm leading-relaxed max-w-3xl">
                       {language === 'pt' ? item.desc_pt : item.desc_en}
                     </p>
                   </div>
-                  <div className="p-3 bg-brand-deep/5 text-brand-deep rounded-xl shrink-0">
-                    <Sparkles className="w-8 h-8 text-brand-blue" />
+                  <div className="p-4 bg-brand-deep/20 border border-white/10 text-brand-blue rounded-2xl shrink-0 self-start md:self-auto">
+                    <Sparkles className="w-8 h-8 text-brand-blue animate-pulse" />
                   </div>
                 </motion.div>
               );
@@ -277,7 +452,150 @@ export default function About({ language }: AboutProps) {
           </div>
         </div>
 
-        {/* 4. Organizational Structure */}
+        {/* 4. INFRASTRUCTURE & PRODUCTION GALLERY (NEW) */}
+        <div className="mb-24 space-y-12">
+          <div className="max-w-xl space-y-2">
+            <span className="text-[10px] font-mono tracking-widest uppercase text-brand-blue bg-brand-blue/10 px-2.5 py-1 rounded-full font-bold">
+              {language === 'pt' ? "Infraestrutura" : "Infrastructure"}
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-brand-deep font-sans">
+              {language === 'pt' ? "Unidades de Produção & Laboratórios" : "Production Units & Laboratories"}
+            </h3>
+            <p className="text-gray-500 text-xs sm:text-sm">
+              {language === 'pt' 
+                ? "Conheça por dentro o processo de transformação física e digital levado a cabo pelas nossas equipas técnicas." 
+                : "A detailed look inside our physical and digital transformation processes carried out by our technical teams."}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="bg-white border border-gray-150 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div className="aspect-[16/10] overflow-hidden relative group">
+                <img 
+                  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop" 
+                  alt="Higienização Física" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent" />
+                <span className="absolute bottom-4 left-4 text-white text-xs font-mono font-bold uppercase bg-brand-blue/90 px-2 py-1 rounded">
+                  01 . {language === 'pt' ? "Higienização" : "Hygiene"}
+                </span>
+              </div>
+              <div className="p-6 space-y-2">
+                <h4 className="font-extrabold text-brand-deep text-base">
+                  {language === 'pt' ? "Higienização e Recuperação Documental" : "Physical Restoration & Cleaning"}
+                </h4>
+                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                  {language === 'pt' 
+                    ? "Higienização técnica de papéis históricos, remoção de fungos, agrafos, clips e reparação manual de folhas danificadas para garantir uma digitalização perfeita sem perda de informação crucial." 
+                    : "Technical cleaning of historical papers, removal of fungi, staples, clips, and manual repair of damaged sheets to guarantee pristine scanning without loss of crucial data."}
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="bg-white border border-gray-150 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div className="aspect-[16/10] overflow-hidden relative group">
+                <img 
+                  src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=800&auto=format&fit=crop" 
+                  alt="Captura Industrial" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent" />
+                <span className="absolute bottom-4 left-4 text-white text-xs font-mono font-bold uppercase bg-brand-blue/90 px-2 py-1 rounded">
+                  02 . {language === 'pt' ? "Digitalização" : "Digitization"}
+                </span>
+              </div>
+              <div className="p-6 space-y-2">
+                <h4 className="font-extrabold text-brand-deep text-base">
+                  {language === 'pt' ? "Estações de Captura Industrial" : "Industrial High-Speed Capture Labs"}
+                </h4>
+                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                  {language === 'pt' 
+                    ? "Sistemas rotativos Kodak Alaris e planetários Zeutschel para captura em alta definição de grandes volumes de documentos, livros e Diários Oficiais sob rigoroso controle de metadados." 
+                    : "Kodak Alaris rotary scanners and Zeutschel planetary stations for high-definition capture of massive document volumes, books, and Official Gazettes under strict metadata control."}
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="bg-white border border-gray-150 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div className="aspect-[16/10] overflow-hidden relative group">
+                <img 
+                  src="https://images.unsplash.com/photo-1450133064473-71024230f91b?q=80&w=800&auto=format&fit=crop" 
+                  alt="Classificação Jurídica" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent" />
+                <span className="absolute bottom-4 left-4 text-white text-xs font-mono font-bold uppercase bg-brand-blue/90 px-2 py-1 rounded">
+                  03 . {language === 'pt' ? "Análise" : "Analysis"}
+                </span>
+              </div>
+              <div className="p-6 space-y-2">
+                <h4 className="font-extrabold text-brand-deep text-base">
+                  {language === 'pt' ? "Gabinete de Classificação Jurídica" : "Legal Taxonomy & Classification Room"}
+                </h4>
+                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                  {language === 'pt' 
+                    ? "A nossa equipa de juristas qualificados lê, interpreta e anota sistematicamente todos os diplomas, alimentando os portais de pesquisa institucional com indexação temática de alta precisão." 
+                    : "Our qualified team of legal specialists reads, interprets, and annotates every document, feeding the JURISNET and SIPPO directories with high-precision thematic indexing."}
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="bg-white border border-gray-150 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div className="aspect-[16/10] overflow-hidden relative group">
+                <img 
+                  src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=800&auto=format&fit=crop" 
+                  alt="Data Center" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent" />
+                <span className="absolute bottom-4 left-4 text-white text-xs font-mono font-bold uppercase bg-brand-blue/90 px-2 py-1 rounded">
+                  04 . {language === 'pt' ? "Servidores" : "Servers"}
+                </span>
+              </div>
+              <div className="p-6 space-y-2">
+                <h4 className="font-extrabold text-brand-deep text-base">
+                  {language === 'pt' ? "Segurança Tecnológica & Cloud Estatal" : "Secure Infrastructure & State Cloud Host"}
+                </h4>
+                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                  {language === 'pt' 
+                    ? "Sistemas de backup blindados instalados localmente. Garantia de custódia e soberania de dados para que os acervos governamentais e empresariais estejam acessíveis 24/7 com cibersegurança militar." 
+                    : "Shielded physical backups installed locally. Guaranteeing complete data sovereignty and custody, ensuring government and corporate archives are accessible 24/7 with military-grade cybersecurity."}
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* 5. Organizational Structure */}
         <div className="mb-24">
           <div className="max-w-xl mb-12 space-y-2">
             <h3 className="text-2xl font-bold text-brand-deep">Estrutura Organizacional</h3>
