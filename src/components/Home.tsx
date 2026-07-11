@@ -4,25 +4,99 @@ import {
   ArrowRight, Shield, Database, Cpu, FileText, Network, CheckCircle, 
   ChevronLeft, ChevronRight, Play, Users, Award, Landmark, GraduationCap, 
   Search, BookOpen, Globe, Laptop, HelpCircle, Briefcase, Zap, Calendar, Lock,
-  Sparkles, Code, MessageSquare, ArrowUpRight, Check, Plus, Minus, PhoneCall, Star, Mail, MapPin, Send, LayoutGrid, X
+  Sparkles, Code, MessageSquare, ArrowUpRight, Check, Plus, Minus, PhoneCall, Star, Mail, MapPin, Send, LayoutGrid, X, Clock
 } from 'lucide-react';
 import { Language } from '../types';
 
 import workspaceScanning from '../assets/images/regenerated_image_1783753906385.png';
-import workspaceImg1 from '../assets/images/regenerated_image_1783754333694.png';
-import workspaceImg2 from '../assets/images/regenerated_image_1783754337971.png';
-import workspaceImg3 from '../assets/images/regenerated_image_1783754346264.png';
-import workspaceImg4 from '../assets/images/regenerated_image_1783754339998.png';
-import workspaceImg5 from '../assets/images/regenerated_image_1783754627267.png';
-import workspaceImg6 from '../assets/images/regenerated_image_1783754651963.png';
-import workspaceImg7 from '../assets/images/regenerated_image_1783754342182.png';
-import workspaceImg8 from '../assets/images/regenerated_image_1783754344326.png';
 import regeneratedProjectImg from '../assets/images/regenerated_image_1783758616892.png';
 import regeneratedBlogImg from '../assets/images/regenerated_image_1783758620144.png';
 
 interface HomeProps {
   language: Language;
   setActiveTab: (tab: string) => void;
+}
+
+function CounterCard({ 
+  value, 
+  suffix = "+", 
+  title, 
+  desc, 
+  icon: IconComponent 
+}: { 
+  value: number; 
+  suffix?: string; 
+  title: string; 
+  desc: string; 
+  icon: React.ComponentType<any>;
+}) {
+  const [count, setCount] = useState(0);
+  const [hasEntered, setHasEntered] = useState(false);
+
+  useEffect(() => {
+    if (!hasEntered) return;
+
+    let startTime: number | null = null;
+    const duration = 2200; // 2.2 seconds for gentle smooth counting
+    
+    const easeOutQuad = (x: number): number => {
+      return 1 - (1 - x) * (1 - x);
+    };
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutQuad(progress);
+      setCount(Math.floor(easedProgress * value));
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setCount(value);
+      }
+    };
+
+    const animationFrameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [value, hasEntered]);
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      onViewportEnter={() => setHasEntered(true)}
+      whileHover={{ y: -6, scale: 1.02 }}
+      className="bg-slate-50/50 border border-slate-100 p-6 sm:p-8 rounded-3xl shadow-sm hover:shadow-xl hover:bg-white hover:border-brand-blue/30 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
+    >
+      {/* Decorative gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/[0.01] to-brand-blue/[0.04] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="p-3 bg-white group-hover:bg-brand-blue/10 rounded-2xl border border-slate-200/60 group-hover:border-brand-blue/20 transition-all duration-300 shadow-sm">
+            <IconComponent className="w-5 h-5 text-brand-blue transition-transform duration-500 group-hover:rotate-12" />
+          </div>
+          <span className="text-[10px] font-mono font-bold uppercase text-slate-300 tracking-wider group-hover:text-brand-blue/40 transition-colors">
+            LEXDATA
+          </span>
+        </div>
+
+        <div className="space-y-1 text-left">
+          <h3 className="text-4xl sm:text-5xl font-extrabold text-brand-deep tracking-tight leading-none group-hover:text-brand-blue transition-colors flex items-baseline gap-0.5">
+            <span className="text-3xl text-brand-blue/70 font-sans font-bold">{suffix}</span>
+            <span className="font-sans font-black">{count}</span>
+          </h3>
+          <p className="text-xs font-bold text-brand-deep uppercase tracking-wider font-sans pt-1.5">
+            {title}
+          </p>
+          <p className="text-[11px] text-slate-400 leading-relaxed font-sans">
+            {desc}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
 }
 
 export default function Home({ language, setActiveTab }: HomeProps) {
@@ -38,14 +112,6 @@ export default function Home({ language, setActiveTab }: HomeProps) {
   const [demoPlatform, setDemoPlatform] = useState('CSP');
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
-
-  // Stats Counters
-  const [stats, setStats] = useState({
-    experience: 0,
-    projects: 0,
-    clients: 0,
-    presence: 0
-  });
 
   // Pipeline Simulator State
   const [simDocIndex, setSimDocIndex] = useState(0);
@@ -134,30 +200,6 @@ export default function Home({ language, setActiveTab }: HomeProps) {
     setSimStep(0);
     setIsSimulating(false);
   };
-
-  useEffect(() => {
-    // Animate stats values nicely
-    const duration = 2000;
-    const steps = 50;
-    const intervalTime = duration / steps;
-    let step = 0;
-
-    const timer = setInterval(() => {
-      step++;
-      setStats({
-        experience: Math.min(Math.floor((15 / steps) * step), 15),
-        projects: Math.min(Math.floor((250 / steps) * step), 250),
-        clients: Math.min(Math.floor((120 / steps) * step), 120),
-        presence: Math.min(Math.floor((10 / steps) * step), 10)
-      });
-
-      if (step >= steps) {
-        clearInterval(timer);
-      }
-    }, intervalTime);
-
-    return () => clearInterval(timer);
-  }, []);
 
   // Main Banner Slideshow Content - Real-world document engineering themes
   const slides = [
@@ -425,16 +467,6 @@ export default function Home({ language, setActiveTab }: HomeProps) {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col md:flex-row items-center justify-between relative z-10 text-left pt-24 md:pt-0 gap-8">
                   {/* Left Side: Content */}
                   <div className="max-w-2xl space-y-6">
-                    <motion.div
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
-                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-blue/20 border border-brand-blue/30 text-brand-blue text-xs font-bold uppercase tracking-widest"
-                    >
-                      <Sparkles className="w-3.5 h-3.5 animate-spin-slow" />
-                      <span>{language === 'pt' ? slide.badge_pt : slide.badge_en}</span>
-                    </motion.div>
-
                     <motion.h1
                       initial={{ opacity: 0, y: 25 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -473,35 +505,6 @@ export default function Home({ language, setActiveTab }: HomeProps) {
                         <span>{language === 'pt' ? "Agendar Demonstração" : "Request Demo"}</span>
                         <ChevronRight className="w-4 h-4" />
                       </button>
-                    </motion.div>
-                  </div>
-
-                  {/* Right Side: Overlapping Cards from Screenshots (INDUST STYLE) */}
-                  <div className="hidden lg:flex flex-col relative w-[320px] h-[360px] justify-center items-end">
-                    {/* Happy Clients Card */}
-                    <motion.div 
-                      initial={{ opacity: 0, x: 40 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.8, type: 'spring' }}
-                      className="bg-slate-900/90 border border-white/10 p-6 rounded-2xl shadow-2xl relative z-10 w-[280px]"
-                    >
-                      <h3 className="text-4xl font-extrabold text-brand-blue">120+</h3>
-                      <p className="text-sm font-bold text-white mt-1">
-                        {language === 'pt' ? "Clientes Satisfeitos" : "Happy Clients"}
-                      </p>
-                      <p className="text-[11px] text-gray-400 mt-2 leading-relaxed">
-                        {language === 'pt' ? "Construindo relações de longo prazo através de confiança e transparência." : "Building long-term relationships through trust, transparency, and results."}
-                      </p>
-                    </motion.div>
-
-                    {/* Small overlapping image */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1, type: 'spring' }}
-                      className="absolute bottom-0 right-32 border-4 border-slate-900 rounded-xl overflow-hidden shadow-xl w-[160px] h-[160px]"
-                    >
-                      <img src={slide.overlay_img} alt="Engineering details" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                     </motion.div>
                   </div>
                 </div>
@@ -739,25 +742,25 @@ export default function Home({ language, setActiveTab }: HomeProps) {
                   className="grid grid-cols-1 md:grid-cols-2 gap-6"
                 >
                   {/* Primary Highlighted Card */}
-                  <div className="bg-white text-slate-900 rounded-2xl overflow-hidden shadow-2xl flex flex-col justify-between p-8 min-h-[380px] hover:scale-[1.02] transition-transform duration-300">
+                  <div className="bg-slate-950/40 border border-white/10 text-white rounded-2xl overflow-hidden shadow-2xl flex flex-col justify-between p-8 min-h-[380px] hover:scale-[1.02] transition-transform duration-300 backdrop-blur-xl">
                     <div className="space-y-4">
                       <span className="text-xs font-mono font-bold text-brand-blue bg-brand-blue/10 px-3 py-1 rounded-full uppercase tracking-wider">
                         {servicesList[activeServiceSlide].num} / SERVICE
                       </span>
-                      <h3 className="text-xl font-extrabold text-brand-deep">
+                      <h3 className="text-xl font-extrabold text-white">
                         {servicesList[activeServiceSlide].title_pt}
                       </h3>
-                      <p className="text-gray-600 text-xs leading-relaxed">
+                      <p className="text-slate-300 text-xs leading-relaxed">
                         {language === 'pt' ? servicesList[activeServiceSlide].desc_pt : servicesList[activeServiceSlide].desc_en}
                       </p>
                     </div>
-                    <div className="pt-6 border-t border-gray-100 mt-6 flex justify-between items-center">
+                    <div className="pt-6 border-t border-white/5 mt-6 flex justify-between items-center">
                       <button 
                         onClick={() => setActiveTab('services')}
-                        className="text-xs font-bold text-brand-deep hover:text-brand-blue transition-colors flex items-center gap-1 cursor-pointer"
+                        className="text-xs font-bold text-slate-200 hover:text-brand-blue transition-colors flex items-center gap-1 cursor-pointer"
                       >
                         <span>{language === 'pt' ? "Saber Mais" : "More details"}</span>
-                        <ChevronRight className="w-3.5 h-3.5" />
+                        <ChevronRight className="w-3.5 h-3.5 text-brand-blue" />
                       </button>
                     </div>
                   </div>
@@ -794,264 +797,6 @@ export default function Home({ language, setActiveTab }: HomeProps) {
         </div>
       </section>
 
-      {/* SECTION 3.5: SIMULADOR DE FLUXO TECNOLÓGICO & OCR EM TEMPO REAL - Quero mais animações d tecnologia */}
-      <section className="py-24 bg-slate-950 text-white relative overflow-hidden border-t border-b border-white/5">
-        {/* Futuristic glowing node matrix background */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#020617_1px,transparent_1px),linear-gradient(to_bottom,#020617_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-blue/10 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-xs font-mono font-bold uppercase tracking-wider">
-              <Cpu className="w-3.5 h-3.5 animate-pulse" />
-              <span>{language === 'pt' ? "SANDBOX DE TECNOLOGIA ATIVA" : "ACTIVE TECHNOLOGY SANDBOX"}</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight font-sans text-white">
-              {language === 'pt' ? "Simulador de Processamento de Conteúdo e OCR" : "Live Content Processing & OCR Simulator"}
-            </h2>
-            <p className="text-gray-400 text-xs sm:text-sm">
-              {language === 'pt' ? (
-                "Experimente a inteligência por trás dos nossos sistemas. Escolha um documento de exemplo e veja como extraímos texto de imagens e catalogamos metadados automaticamente."
-              ) : (
-                "Experience the intelligence behind our solutions. Select a sample document and watch how we automatically extract high-fidelity text and map critical legal metadata."
-              )}
-            </p>
-          </div>
-
-          {/* Interactive Document Selector Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-            {sampleDocs.map((doc, idx) => (
-              <button
-                key={idx}
-                disabled={isSimulating}
-                onClick={() => {
-                  setSimDocIndex(idx);
-                  setSimStep(0);
-                  setSimText('');
-                }}
-                className={`px-5 py-3 rounded-full text-xs font-bold transition-all flex items-center gap-2 cursor-pointer border ${
-                  simDocIndex === idx
-                    ? 'bg-brand-blue border-brand-blue text-white shadow-lg shadow-brand-blue/25'
-                    : 'bg-slate-900 border-white/5 hover:border-white/10 text-gray-400 hover:text-white'
-                } ${isSimulating ? 'opacity-50 cursor-not-allowed' : ''}`}
-              >
-                <FileText className="w-3.5 h-3.5" />
-                <span>{language === 'pt' ? doc.title_pt : doc.title_en}</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Simulator Workspace Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            
-            {/* Column 1: Source Document Preview (Left) */}
-            <div className="lg:col-span-5 bg-slate-900/40 border border-white/5 rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden backdrop-blur-md">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/[0.01] rounded-full pointer-events-none" />
-              
-              <div className="space-y-4 flex-1 flex flex-col">
-                <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                  <span className="text-[10px] font-mono text-gray-500 font-bold uppercase tracking-widest flex items-center gap-2">
-                    <span className={`w-2 h-2 rounded-full ${simStep > 0 ? 'bg-emerald-500 animate-pulse' : 'bg-yellow-500 animate-pulse'}`} />
-                    {language === 'pt' ? "FICHEIRO DE ORIGEM" : "SOURCE SCAN FILE"}
-                  </span>
-                  <span className="text-[10px] font-mono text-gray-400 bg-white/5 px-2.5 py-1 rounded-md">
-                    JPEG / 300 DPI
-                  </span>
-                </div>
-
-                {/* Scanned Document Image Representation */}
-                <div className="flex-1 min-h-[280px] bg-white text-slate-800 rounded-2xl p-6 relative overflow-hidden border border-white/5 shadow-inner flex flex-col justify-between font-serif text-[10px] leading-relaxed select-none">
-                  
-                  {/* Watermark background */}
-                  <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1.5px,transparent_1.5px)] bg-[size:16px_16px] opacity-40 pointer-events-none" />
-
-                  {/* Scanned paper visual details */}
-                  <div className="relative z-10 space-y-4">
-                    <div className="flex items-center justify-between border-b border-gray-200 pb-2">
-                      <div className="w-12 h-4 bg-gray-300 rounded" />
-                      <div className="w-16 h-3 bg-gray-200 rounded" />
-                    </div>
-                    <div className="whitespace-pre-wrap font-mono text-[9px] text-gray-600 leading-normal">
-                      {sampleDocs[simDocIndex].preview_txt}
-                    </div>
-                    <div className="space-y-2 pt-4">
-                      <div className="h-2.5 bg-gray-200 rounded w-full" />
-                      <div className="h-2.5 bg-gray-200 rounded w-[90%]" />
-                      <div className="h-2.5 bg-gray-200 rounded w-[95%]" />
-                      <div className="h-2.5 bg-gray-200 rounded w-[75%]" />
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-[8px] font-sans text-gray-400 font-semibold uppercase">
-                    <span>LEXDATA ENGINE V3.5</span>
-                    <span>CONFIDENTIAL</span>
-                  </div>
-
-                  {/* LASER SCANNING BAR ANIMATION */}
-                  {simStep === 1 && (
-                    <motion.div 
-                      animate={{ 
-                        top: ['0%', '100%', '0%']
-                      }}
-                      transition={{ 
-                        duration: 3, 
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                      className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-emerald-500 to-transparent shadow-[0_0_15px_#10b981] z-20"
-                    />
-                  )}
-                  {simStep === 1 && (
-                    <div className="absolute inset-0 bg-emerald-500/5 pointer-events-none z-10" />
-                  )}
-
-                  {/* Mask blurred overlay when idle */}
-                  {simStep === 0 && (
-                    <div className="absolute inset-0 bg-slate-900/20 backdrop-blur-[1px] flex items-center justify-center z-20">
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={startSimulation}
-                        className="bg-brand-blue hover:bg-brand-blue/90 text-white font-extrabold text-xs px-6 py-3.5 rounded-full shadow-lg transition-all flex items-center gap-2 cursor-pointer border border-brand-blue/35"
-                      >
-                        <Play className="w-4 h-4 fill-current" />
-                        <span>{language === 'pt' ? "Iniciar Digitalização OCR" : "Start OCR Extraction"}</span>
-                      </motion.button>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {simStep > 0 && (
-                <div className="mt-4 flex items-center justify-between gap-3 bg-white/5 border border-white/5 px-4 py-3 rounded-xl">
-                  <span className="text-[10px] font-mono text-gray-400">
-                    {simStep === 1 ? (
-                      <span className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
-                        {language === 'pt' ? "Digitalizando conteúdo..." : "Extracting content..."}
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-1.5 text-emerald-400">
-                        <Check className="w-3.5 h-3.5" />
-                        {language === 'pt' ? "Digitalização Concluída!" : "Extraction Completed!"}
-                      </span>
-                    )}
-                  </span>
-                  <button
-                    disabled={isSimulating}
-                    onClick={resetSimulation}
-                    className="text-[10px] font-mono font-bold text-gray-500 hover:text-white transition-colors cursor-pointer"
-                  >
-                    {language === 'pt' ? "REINICIAR" : "RESET"}
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Column 2: Digital Terminal and Key Mapping (Right) */}
-            <div className="lg:col-span-7 bg-slate-900/60 border border-white/5 rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden backdrop-blur-md">
-              <div className="space-y-6 flex-1 flex flex-col justify-between">
-                
-                {/* Header */}
-                <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                  <span className="text-[10px] font-mono text-gray-400 font-bold uppercase tracking-widest flex items-center gap-2">
-                    <Database className="w-4 h-4 text-brand-blue" />
-                    {language === 'pt' ? "MOTOR DE PROCESSAMENTO SEMÂNTICO" : "SEMANTIC PROCESSING ENGINE"}
-                  </span>
-                  <span className="text-[9px] font-mono text-gray-500">
-                    STATUS: {simStep === 1 ? 'PROCESSING' : simStep === 2 ? 'CLASSIFYING' : simStep === 3 ? 'SUCCESS' : 'STANDBY'}
-                  </span>
-                </div>
-
-                {/* Live Console Terminal log */}
-                <div className="flex-1 min-h-[160px] bg-slate-950/80 rounded-2xl p-5 border border-white/5 font-mono text-[11px] text-cyan-400 leading-relaxed overflow-y-auto space-y-3 shadow-inner">
-                  {simStep === 0 ? (
-                    <div className="text-gray-600 italic select-none">
-                      {language === 'pt' ? "> [SISTEMA] Aguardando inicialização de fluxo..." : "> [SYSTEM] Waiting for pipeline initialization..."}
-                    </div>
-                  ) : (
-                    <>
-                      <div className="text-gray-500">
-                        &gt; [SYSTEM] Initializing high-speed OCR pipeline...
-                      </div>
-                      <div className="text-gray-500">
-                        &gt; [OCR] Running layout segmentation analysis on document matrix...
-                      </div>
-                      <div className="text-emerald-400 font-semibold whitespace-pre-wrap break-all border-l-2 border-emerald-500/30 pl-3 py-1">
-                        &gt; {simText}
-                        {simStep === 1 && <span className="animate-pulse">|</span>}
-                      </div>
-
-                      {simStep >= 2 && (
-                        <motion.div 
-                          initial={{ opacity: 0, y: 5 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="text-yellow-400"
-                        >
-                          &gt; [NLP] Lexical segmentation matches found. Extracting core semantic entities...
-                        </motion.div>
-                      )}
-
-                      {simStep === 3 && (
-                        <motion.div 
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          className="text-emerald-400 font-bold flex items-center gap-1.5"
-                        >
-                          <CheckCircle className="w-4 h-4 text-emerald-500" />
-                          <span>&gt; [SUCCESS] Document indexed & synchronized safely in decentralized secure storage. SHA-256 validation OK.</span>
-                        </motion.div>
-                      )}
-                    </>
-                  )}
-                </div>
-
-                {/* Semantic Entity Mappings Panel */}
-                <div className="space-y-3">
-                  <h4 className="text-xs font-mono font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                    <Network className="w-3.5 h-3.5 text-cyan-400" />
-                    {language === 'pt' ? "METADADOS DETECTADOS" : "IDENTIFIED METADATA"}
-                  </h4>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    {sampleDocs[simDocIndex].metadata.map((meta, mIdx) => (
-                      <div 
-                        key={mIdx}
-                        className={`p-3 border rounded-xl flex items-center justify-between transition-all duration-500 ${
-                          simStep >= 2
-                            ? 'bg-slate-900/90 border-cyan-500/20 shadow-md shadow-cyan-500/[0.02]'
-                            : 'bg-slate-950/20 border-white/5 opacity-40'
-                        }`}
-                      >
-                        <div className="space-y-1">
-                          <p className="text-[9px] font-mono text-gray-500 uppercase">
-                            {language === 'pt' ? meta.label_pt : meta.label_en}
-                          </p>
-                          <p className="text-xs font-bold text-white tracking-wide">
-                            {simStep >= 2 ? meta.val : "---"}
-                          </p>
-                        </div>
-                        {simStep >= 2 ? (
-                          simStep === 2 ? (
-                            <div className="w-3.5 h-3.5 rounded-full border border-cyan-500 border-t-transparent animate-spin" />
-                          ) : (
-                            <Check className="w-3.5 h-3.5 text-emerald-500 font-bold" />
-                          )
-                        ) : null}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
 
       {/* SECTION 4: WHY CHOOSE US (Accordion and Stats row) */}
       <section className="py-24 bg-white text-left">
@@ -1153,54 +898,38 @@ export default function Home({ language, setActiveTab }: HomeProps) {
           </div>
 
           {/* Dynamic Counters Row (Page 2 bottom) */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-16 mt-16 border-t border-gray-100">
-            <div className="space-y-1.5 text-center lg:text-left">
-              <h3 className="text-4xl sm:text-5xl font-extrabold text-brand-blue leading-none">
-                +{stats.experience}
-              </h3>
-              <p className="text-xs font-bold text-brand-deep uppercase tracking-wider font-sans">
-                {language === 'pt' ? "Anos de Experiência" : "Years of Experience"}
-              </p>
-              <p className="text-[11px] text-gray-400 leading-relaxed">
-                {language === 'pt' ? "Soluções consistentes e sólidas no mercado." : "Delivering consistent and reliable solutions across diverse business needs."}
-              </p>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 pt-16 mt-16 border-t border-slate-100">
+            <CounterCard
+              value={15}
+              suffix="+"
+              icon={Award}
+              title={language === 'pt' ? "Anos de Experiência" : "Years of Experience"}
+              desc={language === 'pt' ? "Soluções consistentes e sólidas no mercado angolano." : "Consistent, solid solutions delivering results in the market."}
+            />
 
-            <div className="space-y-1.5 text-center lg:text-left">
-              <h3 className="text-4xl sm:text-5xl font-extrabold text-brand-blue leading-none">
-                +{stats.projects}
-              </h3>
-              <p className="text-xs font-bold text-brand-deep uppercase tracking-wider font-sans">
-                {language === 'pt' ? "Projetos Concluídos" : "Projects Completed"}
-              </p>
-              <p className="text-[11px] text-gray-400 leading-relaxed">
-                {language === 'pt' ? "Executados com planeamento rigoroso e eficiência." : "Successfully planned and executed projects with a focus on quality."}
-              </p>
-            </div>
+            <CounterCard
+              value={250}
+              suffix="+"
+              icon={Briefcase}
+              title={language === 'pt' ? "Projetos Concluídos" : "Projects Completed"}
+              desc={language === 'pt' ? "Executados com planeamento rigoroso, conformidade e eficiência." : "Successfully executed projects with rigorous planning & efficiency."}
+            />
 
-            <div className="space-y-1.5 text-center lg:text-left">
-              <h3 className="text-4xl sm:text-5xl font-extrabold text-brand-blue leading-none">
-                +{stats.clients}
-              </h3>
-              <p className="text-xs font-bold text-brand-deep uppercase tracking-wider font-sans">
-                {language === 'pt' ? "Clientes Satisfeitos" : "Happy Clients"}
-              </p>
-              <p className="text-[11px] text-gray-400 leading-relaxed">
-                {language === 'pt' ? "Relações sustentadas na transparência e rigor." : "Building long-term relationships through trust and transparency."}
-              </p>
-            </div>
+            <CounterCard
+              value={120}
+              suffix="+"
+              icon={Users}
+              title={language === 'pt' ? "Clientes Satisfeitos" : "Happy Clients"}
+              desc={language === 'pt' ? "Relações de excelência sustentadas na transparência e rigor." : "Long-term client relationships built on trust and absolute transparency."}
+            />
 
-            <div className="space-y-1.5 text-center lg:text-left">
-              <h3 className="text-4xl sm:text-5xl font-extrabold text-brand-blue leading-none">
-                +{stats.presence}
-              </h3>
-              <p className="text-xs font-bold text-brand-deep uppercase tracking-wider font-sans">
-                {language === 'pt' ? "Presença de Setor" : "Industry Presence"}
-              </p>
-              <p className="text-[11px] text-gray-400 leading-relaxed">
-                {language === 'pt' ? "Apoiando empresas de múltiplos setores de relevo." : "Supporting businesses across multiple sectors with adaptable solutions."}
-              </p>
-            </div>
+            <CounterCard
+              value={10}
+              suffix="+"
+              icon={Landmark}
+              title={language === 'pt' ? "Presença de Setor" : "Industry Presence"}
+              desc={language === 'pt' ? "Apoiando ativamente empresas de múltiplos setores de relevo." : "Supporting leading institutions across multiple sectors of relevance."}
+            />
           </div>
 
         </div>
@@ -1303,14 +1032,62 @@ export default function Home({ language, setActiveTab }: HomeProps) {
         </div>
       </section>
 
-      {/* SECTION 6: THE PROCESS (Scaffold image background with overlay steps) */}
+      {/* SECTION 6: THE PROCESS (Enhanced with Floating Tech & Premium Cyber Backdrop) */}
       <section className="py-24 relative bg-slate-950 text-white text-left overflow-hidden">
-        {/* Parallax background image */}
+        {/* Parallax high-tech cyber network background image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 mix-blend-overlay"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop')` }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-35 mix-blend-overlay"
+          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop')` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-transparent" />
+
+        {/* Floating tech background objects */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+          {/* Glowing particle 1 - CPU */}
+          <motion.div 
+            animate={{ y: [0, -30, 0], x: [0, 20, 0], rotate: [0, 180, 360] }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/4 left-10 text-brand-blue/15"
+          >
+            <Cpu className="w-12 h-12" />
+          </motion.div>
+          
+          {/* Glowing particle 2 - Database */}
+          <motion.div 
+            animate={{ y: [0, 40, 0], x: [0, -20, 0], rotate: [360, 180, 0] }}
+            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-1/4 right-1/3 text-cyan-400/10"
+          >
+            <Database className="w-16 h-16" />
+          </motion.div>
+
+          {/* Glowing particle 3 - Network */}
+          <motion.div 
+            animate={{ y: [0, -25, 0], x: [0, -15, 0], rotate: [0, -180, -360] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/2 right-12 text-brand-blue/10"
+          >
+            <Network className="w-10 h-10" />
+          </motion.div>
+
+          {/* Glowing particle 4 - Code */}
+          <motion.div 
+            animate={{ y: [0, 35, 0], x: [0, 25, 0], rotate: [45, 225, 405] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-10 left-1/3 text-slate-500/10"
+          >
+            <Code className="w-14 h-14" />
+          </motion.div>
+          
+          {/* Floating cyber lock */}
+          <motion.div 
+            animate={{ y: [0, -20, 0], x: [0, 10, 0], rotate: [0, 90, 0] }}
+            transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-12 left-1/2 text-cyan-500/10"
+          >
+            <Lock className="w-8 h-8" />
+          </motion.div>
+        </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -1334,7 +1111,7 @@ export default function Home({ language, setActiveTab }: HomeProps) {
                 {language === 'pt' ? "Forma de Trabalho Simples e Estruturada" : "A Simple and Structured Way of Working"}
               </h2>
 
-              <p className="text-gray-400 text-sm leading-relaxed">
+              <p className="text-slate-300 text-sm leading-relaxed">
                 {language === 'pt' ? (
                   "O nosso processo é desenhado para garantir clareza, eficiência e excelência técnica em cada etapa de implementação. Seguimos uma abordagem rigorosamente estruturada para atingir os resultados acordados."
                 ) : (
@@ -1343,7 +1120,7 @@ export default function Home({ language, setActiveTab }: HomeProps) {
               </p>
             </motion.div>
 
-            {/* Right Column Process List (Page 4 Style) */}
+            {/* Right Column Process List (Enhanced Bento & Cyber Glassmorphism) */}
             <div className="lg:col-span-7 space-y-6">
               {/* Step 1 */}
               <motion.div 
@@ -1351,18 +1128,18 @@ export default function Home({ language, setActiveTab }: HomeProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="flex gap-5 items-start bg-white/5 border border-white/5 p-6 rounded-2xl hover:border-brand-blue/30 hover:bg-white/10 transition-all duration-300"
+                className="flex gap-5 items-start bg-white/[0.02] border border-white/5 hover:border-brand-blue/40 hover:bg-white/[0.08] p-6 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-md transition-all duration-300 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center text-brand-blue font-mono font-bold text-lg flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center text-brand-blue font-mono font-black text-lg flex-shrink-0 group-hover:scale-110 group-hover:bg-brand-blue/20 transition-all duration-300 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
                   01
                 </div>
                 <div className="space-y-1">
-                  <h4 className="font-bold text-white text-base">
+                  <h4 className="font-bold text-white text-base group-hover:text-brand-blue transition-colors">
                     {language === 'pt' ? "Consulta e Planeamento" : "Consultation & Planning"}
                   </h4>
-                  <p className="text-gray-400 text-xs leading-relaxed">
+                  <p className="text-slate-400 text-xs leading-relaxed">
                     {language === 'pt' ? (
-                      "Começamos por diagnosticar e compreender os seus requisitos específicos, volume de arquivo e objetivos para formular um plan o de transição claro e estruturado."
+                      "Começamos por diagnosticar e compreender os seus requisitos específicos, volume de arquivo e objetivos para formular um plano de transição claro e estruturado."
                     ) : (
                       "We begin by understanding your requirements, objectives, and challenges to create a clear and effective plan."
                     )}
@@ -1376,16 +1153,16 @@ export default function Home({ language, setActiveTab }: HomeProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex gap-5 items-start bg-white/5 border border-white/5 p-6 rounded-2xl hover:border-brand-blue/30 hover:bg-white/10 transition-all duration-300"
+                className="flex gap-5 items-start bg-white/[0.02] border border-white/5 hover:border-brand-blue/40 hover:bg-white/[0.08] p-6 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-md transition-all duration-300 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center text-brand-blue font-mono font-bold text-lg flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center text-brand-blue font-mono font-black text-lg flex-shrink-0 group-hover:scale-110 group-hover:bg-brand-blue/20 transition-all duration-300 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
                   02
                 </div>
                 <div className="space-y-1">
-                  <h4 className="font-bold text-white text-base">
+                  <h4 className="font-bold text-white text-base group-hover:text-brand-blue transition-colors">
                     {language === 'pt' ? "Execução e Implementação" : "Execution & Implementation"}
                   </h4>
-                  <p className="text-gray-400 text-xs leading-relaxed">
+                  <p className="text-slate-400 text-xs leading-relaxed">
                     {language === 'pt' ? (
                       "A nossa equipa implementa as plataformas técnicas ou realiza a digitalização física com máxima segurança de dados, rigor técnico e controlo de qualidade."
                     ) : (
@@ -1401,16 +1178,16 @@ export default function Home({ language, setActiveTab }: HomeProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex gap-5 items-start bg-white/5 border border-white/5 p-6 rounded-2xl hover:border-brand-blue/30 hover:bg-white/10 transition-all duration-300"
+                className="flex gap-5 items-start bg-white/[0.02] border border-white/5 hover:border-brand-blue/40 hover:bg-white/[0.08] p-6 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-md transition-all duration-300 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center text-brand-blue font-mono font-bold text-lg flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center text-brand-blue font-mono font-black text-lg flex-shrink-0 group-hover:scale-110 group-hover:bg-brand-blue/20 transition-all duration-300 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
                   03
                 </div>
                 <div className="space-y-1">
-                  <h4 className="font-bold text-white text-base">
+                  <h4 className="font-bold text-white text-base group-hover:text-brand-blue transition-colors">
                     {language === 'pt' ? "Entrega e Apoio Continuado" : "Delivery & Support"}
                   </h4>
-                  <p className="text-gray-400 text-xs leading-relaxed">
+                  <p className="text-slate-400 text-xs leading-relaxed">
                     {language === 'pt' ? (
                       "Entregamos as soluções validadas e oferecemos apoio técnico dedicado contínuo para garantir um desempenho ideal e satisfação organizacional."
                     ) : (
@@ -1508,240 +1285,159 @@ export default function Home({ language, setActiveTab }: HomeProps) {
         </div>
       </section>
 
-      {/* SECTION 8: LARGE DYNAMIC GALLERY (Page 5 Style) */}
-      <section className="py-24 bg-gray-50 text-center relative overflow-hidden">
-        {/* Gigantic Backdrop Text */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[14vw] font-black text-slate-200/40 tracking-widest select-none uppercase pointer-events-none">
-          {language === 'pt' ? 'GALERIA' : 'GALLERY'}
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
-          <div className="max-w-2xl mx-auto mb-16 text-center space-y-4">
-            <div className="flex items-center justify-center gap-2">
-              <span className="w-2.5 h-2.5 bg-brand-blue transform rotate-45" />
-              <span className="text-xs uppercase font-mono font-bold tracking-widest text-brand-blue">
-                {language === 'pt' ? 'AMBIENTE CORPORATIVO' : 'MEDIA SPACE'}
-              </span>
-            </div>
-            <h2 className="text-3xl font-extrabold text-brand-deep tracking-tight font-sans">
-              {language === 'pt' ? "Galeria do Nosso Ambiente" : "Our Professional Workspaces"}
-            </h2>
-          </div>
-
-          {/* Overlapping grid collage from screenshot page 5 */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6 }}
-              className="space-y-4"
-            >
-              <div className="rounded-2xl overflow-hidden aspect-square shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src={workspaceImg1} referrerPolicy="no-referrer" alt="Workspace 1" className="w-full h-full object-cover" />
-              </div>
-              <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src={workspaceImg2} referrerPolicy="no-referrer" alt="Workspace 2" className="w-full h-full object-cover" />
-              </div>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="space-y-4 pt-6 md:pt-12"
-            >
-              <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src={workspaceImg3} referrerPolicy="no-referrer" alt="Workspace 3" className="w-full h-full object-cover" />
-              </div>
-              <div className="rounded-2xl overflow-hidden aspect-square shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src={workspaceImg4} referrerPolicy="no-referrer" alt="Workspace 4" className="w-full h-full object-cover" />
-              </div>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-4"
-            >
-              <div className="rounded-2xl overflow-hidden aspect-square shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src={workspaceImg5} referrerPolicy="no-referrer" alt="Workspace 5" className="w-full h-full object-cover" />
-              </div>
-              <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src={workspaceImg6} referrerPolicy="no-referrer" alt="Workspace 6" className="w-full h-full object-cover" />
-              </div>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="space-y-4 pt-6 md:pt-12"
-            >
-              <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src={workspaceImg7} referrerPolicy="no-referrer" alt="Workspace 7" className="w-full h-full object-cover" />
-              </div>
-              <div className="rounded-2xl overflow-hidden aspect-square shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src={workspaceImg8} referrerPolicy="no-referrer" alt="Workspace 8" className="w-full h-full object-cover" />
-              </div>
-            </motion.div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECTION 9: TESTIMONIALS (Page 5 Style) */}
-      <section className="py-24 bg-white text-left">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            
-            {/* Left Column rating */}
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-              className="lg:col-span-5 space-y-6"
-            >
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 bg-brand-blue transform rotate-45" />
-                <span className="text-xs uppercase font-mono font-bold tracking-widest text-brand-blue">
-                  {language === 'pt' ? 'TESTEMUNHOS' : 'TESTIMONIALS'}
-                </span>
-              </div>
-
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-deep tracking-tight font-sans leading-tight">
-                {language === 'pt' ? "O Que os Nossos Clientes Dizem Sobre Nós" : "What Our Clients Say About Us"}
-              </h2>
-
-              <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
-                {language === 'pt' ? (
-                  "Valorizamos profundamente a confiança depositada na nossa equipa. Partilhamos os comentários daqueles que trabalham connosco de forma continuada."
-                ) : (
-                  "We value the trust our clients place in us. Here's what they have to say about their experience working with our team and the quality of our solutions."
-                )}
-              </p>
-
-              {/* Rating block (Page 5 style) */}
-              <div className="p-6 bg-gray-50 rounded-2xl border border-gray-150 inline-flex flex-col items-start gap-1">
-                <h4 className="text-4xl font-extrabold text-brand-deep leading-none">4.0</h4>
-                <div className="flex items-center gap-1 text-yellow-500 mt-2">
-                  <Star className="w-5 h-5 fill-current" />
-                  <Star className="w-5 h-5 fill-current" />
-                  <Star className="w-5 h-5 fill-current" />
-                  <Star className="w-5 h-5 fill-current" />
-                  <Star className="w-5 h-5" />
-                </div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-2">
-                  OVERALL RATING
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Right Column Stack of Testimonials */}
-            <div className="lg:col-span-7 space-y-6">
-              {testimonials.map((test, idx) => (
-                <motion.div 
-                  key={idx}
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="bg-gray-50 border border-gray-200 p-8 rounded-2xl shadow-sm text-left relative hover:shadow-md transition-all duration-300"
-                >
-                  <span className="absolute top-6 right-8 text-6xl text-brand-blue/15 font-serif leading-none select-none">“</span>
-                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed relative z-10 italic">
-                    {language === 'pt' ? test.text_pt : test.text_en}
-                  </p>
-                  <div className="mt-6 flex items-center gap-4">
-                    <img 
-                      src={test.img} 
-                      alt={test.name}
-                      referrerPolicy="no-referrer"
-                      className="w-12 h-12 rounded-full object-cover border-2 border-brand-blue/20 shadow-sm flex-shrink-0"
-                    />
-                    <div>
-                      <h4 className="font-bold text-brand-deep text-sm leading-none">{test.name}</h4>
-                      <p className="text-gray-400 text-[10px] mt-1">{test.location}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 10: GET STARTED BANNER (Page 6 Teal background Style) */}
+      {/* SECTION 10: GET STARTED BANNER (Enhanced Premium Bento & Glassmorphism Design) */}
       <motion.section 
-        initial={{ opacity: 0, scale: 0.95, y: 40 }}
-        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.7 }}
-        className="py-16 bg-brand-blue text-white text-left relative overflow-hidden mx-4 sm:mx-8 lg:mx-16 rounded-3xl shadow-xl my-16"
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="py-16 sm:py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white text-left relative overflow-hidden mx-4 sm:mx-8 lg:mx-16 rounded-[2.5rem] shadow-[0_24px_60px_rgba(0,0,0,0.25)] my-16 border border-slate-800/80"
       >
-        {/* Dotted pattern elements */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full pointer-events-none" />
-        <div className="absolute bottom-[-20px] left-10 w-24 h-24 bg-white/5 rounded-full pointer-events-none" />
+        {/* Futuristic glowing ambient background circles */}
+        <div className="absolute -top-40 -right-40 w-[450px] h-[450px] bg-brand-blue/15 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
+        
+        {/* Subtle decorative grid background for tech feel */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:2rem_2rem] [mask-image:radial-gradient(ellipse_at_center,white_70%,transparent_100%)] opacity-40 pointer-events-none" />
 
-        <div className="max-w-6xl mx-auto px-8 md:px-12 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-14 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
-            {/* Left Content */}
-            <div className="lg:col-span-7 space-y-4">
-              <span className="text-[10px] font-mono font-bold tracking-widest text-brand-deep bg-white/25 px-3 py-1 rounded-full uppercase">
-                {language === 'pt' ? "COMEÇAR AGORA" : "GET STARTED"}
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight font-sans">
-                {language === 'pt' ? "Vamos Construir Algo Grande Juntos" : "Let's Build Something Great Together"}
-              </h2>
-              <p className="text-white/80 text-xs sm:text-sm leading-relaxed max-w-xl">
+            {/* Left Content Column */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-[10px] font-mono font-bold uppercase tracking-widest">
+                <Sparkles className="w-3.5 h-3.5 animate-pulse" />
+                <span>{language === 'pt' ? "PARCEIRO DE INOVAÇÃO" : "INNOVATION PARTNER"}</span>
+              </div>
+              
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight font-sans text-white leading-[1.1]">
                 {language === 'pt' ? (
-                  "Partilhe connosco os seus requisitos de arquivo ou as especificações das suas plataformas de gestão e descubra como podemos elevar o seu ecossistema documental com segurança."
+                  <>Vamos Desenhar o <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-cyan-400">Futuro Digital</span> Juntos</>
                 ) : (
-                  "Share your requirements with us and discover how our solutions can help your business grow with confidence, efficiency, and long-term value."
+                  <>Let's Design the <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-cyan-400">Digital Future</span> Together</>
+                )}
+              </h2>
+              
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
+                {language === 'pt' ? (
+                  "Partilhe connosco os seus requisitos de arquivo físico, digitalização inteligente ou as especificações das suas plataformas de gestão. Descubra como podemos simplificar e garantir conformidade total."
+                ) : (
+                  "Share your requirements for physical archiving, smart digitization, or systems integration. Discover how we can simplify your operational flow with compliance and security."
                 )}
               </p>
               
-              <div className="flex flex-wrap gap-4 pt-4">
+              <div className="flex flex-wrap gap-4 pt-2">
                 <button
                   onClick={() => setActiveTab('contact')}
-                  className="bg-white hover:bg-gray-100 text-brand-blue font-bold text-xs px-6 py-3 rounded-full shadow-lg transition-all flex items-center gap-1.5 cursor-pointer"
+                  className="bg-brand-blue hover:bg-brand-blue/90 text-white font-extrabold text-xs px-8 py-4 rounded-full shadow-lg shadow-brand-blue/25 hover:shadow-brand-blue/40 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 cursor-pointer"
                 >
-                  <span>{language === 'pt' ? "Contactar" : "Contact Us"}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span>{language === 'pt' ? "Contactar Especialista" : "Contact a Specialist"}</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setDemoModalOpen(true)}
-                  className="bg-brand-deep hover:bg-slate-800 text-white font-bold text-xs px-6 py-3 rounded-full shadow-lg transition-all flex items-center gap-1.5 cursor-pointer border border-brand-deep/25"
+                  className="bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs px-8 py-4 rounded-full shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 cursor-pointer border border-slate-800 hover:border-slate-700"
                 >
-                  <span>{language === 'pt' ? "Solicitar Proposta" : "Get A Quote"}</span>
-                  <FileText className="w-3.5 h-3.5" />
+                  <span>{language === 'pt' ? "Solicitar Orçamento" : "Request Quote"}</span>
+                  <FileText className="w-4 h-4 text-slate-400" />
                 </button>
               </div>
             </div>
 
-            {/* Right overlapping circles callout (Page 6 Style) */}
-            <div className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center">
-              <div className="bg-slate-900 border border-white/10 p-6 rounded-2xl shadow-2xl relative w-[290px] text-center lg:text-left flex items-center gap-4">
-                <div className="p-3 bg-brand-blue/10 text-brand-blue rounded-full animate-bounce">
-                  <PhoneCall className="w-5 h-5" />
+            {/* Right Interactive Bento-Glassmorphism Card Column */}
+            <div className="lg:col-span-5 flex justify-center">
+              <motion.div 
+                whileHover={{ y: -5, scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+                className="bg-white/[0.03] border border-white/10 backdrop-blur-xl p-6 sm:p-8 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.3)] w-full max-w-md relative overflow-hidden group"
+              >
+                {/* Decorative border gloss highlight */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
+                
+                {/* Card Title & Online Status */}
+                <div className="flex items-center justify-between border-b border-white/5 pb-5 mb-5">
+                  <div className="space-y-1">
+                    <h3 className="text-sm font-extrabold tracking-wider text-white font-mono uppercase">
+                      {language === 'pt' ? "CENTRO DE ATENDIMENTO" : "ENGAGEMENT HUB"}
+                    </h3>
+                    <p className="text-[10px] text-slate-400 font-sans">
+                      {language === 'pt' ? "Lexdata Angola" : "Lexdata Head Office"}
+                    </p>
+                  </div>
+                  
+                  {/* Glowing Active Status */}
+                  <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    <span className="text-[10px] font-bold text-emerald-400 font-mono tracking-wider">
+                      {language === 'pt' ? "DISPONÍVEL" : "ONLINE"}
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-gray-400 text-[10px] font-mono leading-none font-bold uppercase">
-                    {language === 'pt' ? "TEM PERGUNTAS?" : "HAVE QUESTIONS?"}
-                  </p>
-                  <p className="text-white font-extrabold text-sm mt-1.5 whitespace-nowrap">
-                    +244 923 456 789
-                  </p>
+
+                {/* Info Rows */}
+                <div className="space-y-4">
+                  {/* Call Row */}
+                  <a 
+                    href="tel:+244923456789" 
+                    className="flex items-center gap-4 p-3.5 rounded-2xl bg-white/[0.01] hover:bg-white/[0.05] border border-white/[0.02] hover:border-white/10 transition-all duration-300 group/row"
+                  >
+                    <div className="p-3 bg-brand-blue/10 text-brand-blue rounded-xl group-hover/row:scale-110 group-hover/row:bg-brand-blue/20 transition-all duration-300">
+                      <PhoneCall className="w-4.5 h-4.5" />
+                    </div>
+                    <div className="text-left space-y-0.5">
+                      <p className="text-[10px] font-mono font-bold text-slate-400 group-hover/row:text-slate-300 transition-colors uppercase">
+                        {language === 'pt' ? "Linha Direta" : "Hotline Support"}
+                      </p>
+                      <p className="text-sm font-black text-white group-hover/row:text-brand-blue transition-colors">
+                        +244 923 456 789
+                      </p>
+                    </div>
+                  </a>
+
+                  {/* Email Row */}
+                  <a 
+                    href="mailto:geral@lexdata.ao" 
+                    className="flex items-center gap-4 p-3.5 rounded-2xl bg-white/[0.01] hover:bg-white/[0.05] border border-white/[0.02] hover:border-white/10 transition-all duration-300 group/row"
+                  >
+                    <div className="p-3 bg-cyan-500/10 text-cyan-400 rounded-xl group-hover/row:scale-110 group-hover/row:bg-cyan-500/20 transition-all duration-300">
+                      <Mail className="w-4.5 h-4.5" />
+                    </div>
+                    <div className="text-left space-y-0.5">
+                      <p className="text-[10px] font-mono font-bold text-slate-400 group-hover/row:text-slate-300 transition-colors uppercase">
+                        {language === 'pt' ? "Email Geral" : "Corporate Email"}
+                      </p>
+                      <p className="text-sm font-black text-white group-hover/row:text-cyan-400 transition-colors">
+                        geral@lexdata.ao
+                      </p>
+                    </div>
+                  </a>
+
+                  {/* Support/Operational Hours Row */}
+                  <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-white/[0.01] border border-white/[0.01]">
+                    <div className="p-3 bg-slate-800 text-slate-400 rounded-xl">
+                      <Clock className="w-4.5 h-4.5 text-brand-blue" />
+                    </div>
+                    <div className="text-left space-y-0.5">
+                      <p className="text-[10px] font-mono font-bold text-slate-400 uppercase">
+                        {language === 'pt' ? "Horário Comercial" : "Office Hours"}
+                      </p>
+                      <p className="text-xs font-semibold text-slate-200">
+                        {language === 'pt' ? "Segunda a Sexta: 08:00 - 17:00" : "Monday to Friday: 08:00 AM - 05:00 PM"}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+
+                {/* Micro Footer Accent */}
+                <div className="mt-5 pt-4 border-t border-white/5 flex justify-between items-center text-[9px] font-mono text-slate-500 uppercase tracking-widest font-bold">
+                  <span>LEXDATA TECH</span>
+                  <span>EST. 2011</span>
+                </div>
+
+              </motion.div>
             </div>
 
           </div>

@@ -92,34 +92,91 @@ export default function About({ language }: AboutProps) {
   ];
 
   return (
-    <div className="bg-white text-left">
-      {/* Banner Section with Background Image */}
-      <div className="relative h-[240px] sm:h-[300px] bg-brand-deep flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
+    <div className="bg-white text-left relative">
+      {/* Banner Section with Advanced Cybernetic Split-Screen */}
+      <div className="relative min-h-[300px] sm:min-h-[360px] bg-slate-950 flex items-center overflow-hidden border-b border-white/5">
+        {/* Deep Tech Background Pattern */}
+        <div className="absolute inset-0 z-0 opacity-40">
+          <div className="absolute inset-0 bg-[radial-gradient(#3b82f615_1.2px,transparent_1.2px)] [background-size:20px_20px]" />
           <img 
-            src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop" 
-            alt="About Banner" 
-            className="w-full h-full object-cover opacity-30" 
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600&auto=format&fit=crop" 
+            alt="About Banner Mesh" 
+            className="w-full h-full object-cover opacity-25 mix-blend-overlay" 
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-deep via-brand-deep/85 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent" />
+        </div>
+
+        {/* Floating tech nodes in banner */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden select-none opacity-45">
+          <motion.div 
+            animate={{ y: [0, -15, 0], rotate: [0, 90, 0] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-10 right-1/3 text-brand-blue/20"
+          >
+            <Zap className="w-8 h-8" />
+          </motion.div>
+          <motion.div 
+            animate={{ y: [0, 20, 0], rotate: [360, 180, 0] }}
+            transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-12 left-1/4 text-cyan-400/15"
+          >
+            <Network className="w-10 h-10" />
+          </motion.div>
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mt-8">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="w-2 h-2 bg-brand-blue transform rotate-45" />
-            <span className="text-xs uppercase font-mono font-bold tracking-widest text-brand-blue">
-              {language === 'pt' ? 'SOBRE NÓS' : 'ABOUT'}
-            </span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left text column */}
+            <div className="lg:col-span-7 space-y-4 text-left">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 bg-brand-blue rounded-full animate-pulse" />
+                <span className="text-xs uppercase font-mono font-bold tracking-widest text-brand-blue">
+                  {language === 'pt' ? 'MÁXIMO RIGOR INSTITUCIONAL' : 'MAXIMUM INSTITUTIONAL RIGOR'}
+                </span>
+              </div>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight">
+                {language === 'pt' ? "A Nossa" : "Our"}{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-cyan-400">
+                  {language === 'pt' ? "Identidade" : "Identity"}
+                </span>
+              </h1>
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
+                {language === 'pt' 
+                  ? "Uma subsidiária oficial da Imprensa Nacional - E.P., líder nacional na salvaguarda e desmaterialização inteligente de acervos governamentais e corporativos de Angola." 
+                  : "An official subsidiary of Imprensa Nacional - E.P., national leader in the safeguarding and smart dematerialization of Angolan government and corporate archives."}
+              </p>
+            </div>
+
+            {/* Right isometric slide mockup column */}
+            <div className="hidden lg:col-span-5 lg:flex justify-end">
+              <motion.div 
+                initial={{ opacity: 0, x: 50, rotateY: -15, rotateX: 10 }}
+                animate={{ opacity: 1, x: 0, rotateY: -8, rotateX: 6, y: [0, -10, 0] }}
+                transition={{ 
+                  opacity: { duration: 0.8 },
+                  x: { duration: 0.8 },
+                  y: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+                }}
+                className="w-full max-w-[420px] bg-slate-900/65 p-2.5 rounded-2xl border border-white/10 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] backdrop-blur-md relative group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="aspect-[16/10] rounded-xl overflow-hidden border border-white/5 bg-slate-950 relative">
+                  <img 
+                    src="https://visa.onlyvibes.online/wp-content/uploads/2026/07/PRESENTATION-LEXDATA_01-0260621-1.pdf.png" 
+                    alt="LEXDATA Core Presentation Slide 1" 
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-4">
+                    <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/50 border border-cyan-800/30 px-2 py-0.5 rounded uppercase tracking-wider font-bold">
+                      SLIDE 01 : PORTAL JURISNET
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-            {language === 'pt' ? "Sobre" : "About"}
-          </h1>
-          <p className="text-gray-300 text-xs sm:text-sm mt-2 max-w-xl">
-            {language === 'pt' 
-              ? "Eficiência, rigor e inovação na salvaguarda do património documental angolano." 
-              : "Efficiency, rigor, and innovation in safeguarding Angolan documentary assets."}
-          </p>
         </div>
       </div>
 
@@ -129,18 +186,18 @@ export default function About({ language }: AboutProps) {
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold uppercase tracking-wider">
             <Info className="w-3.5 h-3.5" />
-            <span>{language === 'pt' ? 'A Empresa' : 'The Company'}</span>
+            <span>{language === 'pt' ? 'Quem Somos' : 'About Us'}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-deep tracking-tight">
-            {language === 'pt' ? "Quem Somos e o que nos Define" : "Who We Are & Our Core Identity"}
+            {language === 'pt' ? "Modernização com Legitimidade e Tecnologia" : "Modernization with Legitimacy & Technology"}
           </h2>
           <p className="text-gray-500 text-sm">
-            {language === 'pt' ? "Eficiência, Rigor e Inovação Tecnológica na Salvaguarda do Património Documental" : "Efficiency, Rigor, and Tech Innovation in Safeguarding Document Assets"}
+            {language === 'pt' ? "Unimos o prestígio institucional da Imprensa Nacional à engenharia de processos sem papel de última geração." : "Combining the institutional prestige of Imprensa Nacional with next-gen paperless process engineering."}
           </p>
-          <div className="w-20 h-1.5 bg-brand-blue mx-auto mt-4 rounded-full" />
+          <div className="w-16 h-1 bg-brand-blue mx-auto mt-4 rounded-full" />
         </div>
 
-        {/* 1. Who We Are Presentation */}
+        {/* 1. Who We Are Presentation (With slide 2 presentation mock) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24">
           <div className="lg:col-span-6 space-y-6">
             <motion.div
@@ -150,7 +207,7 @@ export default function About({ language }: AboutProps) {
               transition={{ duration: 0.6 }}
               className="space-y-4"
             >
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-brand-deep font-sans">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-brand-deep font-sans tracking-tight">
                 {language === 'pt' ? "Modernização de Acervos com Rigor Estatal" : "State-Backed Modernization of Historical Archives"}
               </h3>
               <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
@@ -162,9 +219,9 @@ export default function About({ language }: AboutProps) {
               </p>
               <p className="text-gray-600 leading-relaxed text-sm">
                 {language === 'pt' ? (
-                  "Através da nossa engenharia documental proprietária e equipa de juristas especializados, transformamos arquivos físicos estáticos em repositórios dinâmicos e indexados, prontos para a tomada de decisão rápida e segura."
+                  "Através da nossa engenharia documental proprietária e equipa de juristas especializados, transformamos arquivos físicos estáticos em repositórios dinâmicos e indexados, prontos para a tomada de decisão rápida e segura nos ministérios e indústrias nacionais."
                 ) : (
-                  "Through our proprietary document engineering and specialized team of legal scholars, we transform static physical archives into dynamic, indexed repositories ready for swift and secure decision-making."
+                  "Through our proprietary document engineering and specialized team of legal scholars, we transform static physical archives into dynamic, indexed repositories ready for swift and secure decision-making within national ministries and industries."
                 )}
               </p>
             </motion.div>
@@ -190,40 +247,41 @@ export default function About({ language }: AboutProps) {
             </motion.div>
           </div>
 
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-12 gap-4">
+          {/* Presentation Slide 2 Mock Showcase */}
+          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-12 gap-6">
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="sm:col-span-7 rounded-2xl overflow-hidden shadow-xl aspect-video sm:aspect-square relative group"
+              className="sm:col-span-8 rounded-2xl overflow-hidden shadow-2xl aspect-[16/11] relative group border border-slate-200"
             >
               <img 
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" 
-                alt="Modern State Archiving Facilities" 
+                src="https://visa.onlyvibes.online/wp-content/uploads/2026/07/PRESENTATION-LEXDATA_01-0260621-1.pdf-1.png" 
+                alt="LEXDATA Document Engineering Blueprint Slide 2" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent flex items-end p-4">
                 <p className="text-white text-xs font-bold font-mono">
-                  {language === 'pt' ? "Salas de Digitalização Industrial" : "Industrial Scanning Labs"}
+                  {language === 'pt' ? "Slide 02 : Engenharia Documental" : "Slide 02 : Document Engineering"}
                 </p>
               </div>
             </motion.div>
 
-            <div className="sm:col-span-5 space-y-4 flex flex-col justify-between">
+            <div className="sm:col-span-4 space-y-4 flex flex-col justify-between">
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="bg-gradient-to-br from-brand-deep to-slate-900 p-6 rounded-2xl text-white shadow-lg relative overflow-hidden shrink-0"
+                className="bg-gradient-to-br from-brand-deep to-slate-900 p-5 rounded-2xl text-white shadow-lg relative overflow-hidden shrink-0"
               >
-                <div className="absolute top-0 right-0 -mr-12 -mt-12 w-24 h-24 rounded-full bg-brand-blue/15" />
-                <Building2 className="w-8 h-8 text-brand-blue mb-3" />
-                <h4 className="font-bold text-xs sm:text-sm mb-1">{language === 'pt' ? "Governação Sólida" : "Solid Governance"}</h4>
-                <p className="text-gray-300 text-[10px] leading-relaxed">
-                  {language === 'pt' ? "Acionistas públicos e privados sob o selo de confiança nacional." : "Public-private governance model backed by national trust."}
+                <div className="absolute top-0 right-0 -mr-10 -mt-10 w-20 h-20 rounded-full bg-brand-blue/15" />
+                <Building2 className="w-7 h-7 text-brand-blue mb-2.5" />
+                <h4 className="font-bold text-xs mb-1">{language === 'pt' ? "Selo do Estado" : "State Backing"}</h4>
+                <p className="text-slate-300 text-[10px] leading-relaxed">
+                  {language === 'pt' ? "Governação robusta associada à Imprensa Nacional." : "Robust state governance linked to Imprensa Nacional."}
                 </p>
               </motion.div>
 
@@ -232,17 +290,17 @@ export default function About({ language }: AboutProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="rounded-2xl overflow-hidden shadow-lg aspect-video sm:aspect-square relative group shrink-0"
+                className="rounded-2xl overflow-hidden shadow-xl aspect-[4/3] relative group shrink-0 border border-slate-200"
               >
                 <img 
-                  src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=600&auto=format&fit=crop" 
-                  alt="Document rehabilitation" 
+                  src="https://visa.onlyvibes.online/wp-content/uploads/2026/07/PRESENTATION-LEXDATA_01-0260621-1.pdf-2.png" 
+                  alt="LEXDATA Solutions Blueprint Slide 3" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent flex items-end p-3">
-                  <p className="text-white text-[10px] font-bold">
-                    {language === 'pt' ? "Preservação Física" : "Physical Preservation"}
+                  <p className="text-white text-[9px] font-bold font-mono">
+                    {language === 'pt' ? "Slide 03 : Soluções Elite" : "Slide 03 : Elite Solutions"}
                   </p>
                 </div>
               </motion.div>
@@ -421,35 +479,62 @@ export default function About({ language }: AboutProps) {
 
         {/* 3. Mission, Vision, Values Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-          <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all space-y-4">
-            <div className="w-12 h-12 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center">
-              <Briefcase className="w-6 h-6" />
+          <motion.div 
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+            className="bg-white p-8 rounded-3xl border border-slate-100 hover:border-brand-blue/30 shadow-sm hover:shadow-xl transition-all duration-300 space-y-4 group relative overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/[0.01] to-brand-blue/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            <div className="w-12 h-12 rounded-2xl bg-brand-blue/10 text-brand-blue flex items-center justify-center group-hover:bg-brand-blue group-hover:text-white transition-all duration-300 shadow-sm">
+              <Briefcase className="w-5 h-5" />
             </div>
-            <h4 className="text-lg font-bold text-brand-deep">Nossa Missão</h4>
-            <p className="text-gray-500 text-xs leading-relaxed">
-              Promover a transição digital sustentável de organizações públicas e privadas em Angola, desmaterializando arquivos e normalizando fluxos de informação de valor legal e operacional.
+            <h4 className="text-xl font-bold text-brand-deep font-sans">
+              {language === 'pt' ? "Nossa Missão" : "Our Mission"}
+            </h4>
+            <p className="text-gray-500 text-sm leading-relaxed font-sans">
+              {language === 'pt' 
+                ? "Promover a transição digital sustentável de organizações públicas e privadas em Angola, desmaterializando arquivos e normalizando fluxos de informação de valor legal e operacional."
+                : "Promote the sustainable digital transition of public and private organizations in Angola, dematerializing archives and standardizing workflows of legal and operational value."}
             </p>
-          </div>
+          </motion.div>
 
-          <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all space-y-4">
-            <div className="w-12 h-12 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center">
-              <Eye className="w-6 h-6" />
+          <motion.div 
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+            className="bg-white p-8 rounded-3xl border border-slate-100 hover:border-brand-blue/30 shadow-sm hover:shadow-xl transition-all duration-300 space-y-4 group relative overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/[0.01] to-brand-blue/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            <div className="w-12 h-12 rounded-2xl bg-brand-blue/10 text-brand-blue flex items-center justify-center group-hover:bg-brand-blue group-hover:text-white transition-all duration-300 shadow-sm">
+              <Eye className="w-5 h-5" />
             </div>
-            <h4 className="text-lg font-bold text-brand-deep">Nossa Visão</h4>
-            <p className="text-gray-500 text-xs leading-relaxed">
-              Ser reconhecida como a referência absoluta no tratamento arquivístico, classificação jurídica e modernização tecnológica em Angola com total integridade de dados e auditoria de segurança.
+            <h4 className="text-xl font-bold text-brand-deep font-sans">
+              {language === 'pt' ? "Nossa Visão" : "Our Vision"}
+            </h4>
+            <p className="text-gray-500 text-sm leading-relaxed font-sans">
+              {language === 'pt' 
+                ? "Ser reconhecida como a referência absoluta no tratamento arquivístico, classificação jurídica e modernização tecnológica em Angola com total integridade de dados e auditoria de segurança."
+                : "To be recognized as the absolute reference in archival treatment, legal classification, and technological modernization in Angola with complete data integrity and security audit."}
             </p>
-          </div>
+          </motion.div>
 
-          <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all space-y-4">
-            <div className="w-12 h-12 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center">
-              <HeartHandshake className="w-6 h-6" />
+          <motion.div 
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+            className="bg-white p-8 rounded-3xl border border-slate-100 hover:border-brand-blue/30 shadow-sm hover:shadow-xl transition-all duration-300 space-y-4 group relative overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/[0.01] to-brand-blue/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            <div className="w-12 h-12 rounded-2xl bg-brand-blue/10 text-brand-blue flex items-center justify-center group-hover:bg-brand-blue group-hover:text-white transition-all duration-300 shadow-sm">
+              <HeartHandshake className="w-5 h-5" />
             </div>
-            <h4 className="text-lg font-bold text-brand-deep">Nossos Valores</h4>
-            <p className="text-gray-500 text-xs leading-relaxed">
-              Pautamos as nossas ações por excelência técnica rigorosa, segurança cibernética impenetrável, confidencialidade absoluta, ética de governança pública e foco na otimização de tempo.
+            <h4 className="text-xl font-bold text-brand-deep font-sans">
+              {language === 'pt' ? "Nossos Valores" : "Our Values"}
+            </h4>
+            <p className="text-gray-500 text-sm leading-relaxed font-sans">
+              {language === 'pt' 
+                ? "Pautamos as nossas ações por excelência técnica rigorosa, segurança cibernética impenetrável, confidencialidade absoluta, ética de governança pública e foco na otimização de tempo."
+                : "We guide our actions by rigorous technical excellence, impenetrable cybersecurity, absolute confidentiality, public governance ethics, and focus on time optimization."}
             </p>
-          </div>
+          </motion.div>
         </div>
 
         {/* 4. INFRASTRUCTURE & PRODUCTION GALLERY (NEW) */}
@@ -595,75 +680,7 @@ export default function About({ language }: AboutProps) {
           </div>
         </div>
 
-        {/* 5. Organizational Structure */}
-        <div className="mb-24">
-          <div className="max-w-xl mb-12 space-y-2">
-            <h3 className="text-2xl font-bold text-brand-deep">Estrutura Organizacional</h3>
-            <p className="text-gray-500 text-xs">Nosso organograma estruturado para máxima conformidade e rigor operacional.</p>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {organizationalStructure.map((org, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-3 relative overflow-hidden group">
-                <span className="text-[10px] font-mono font-bold tracking-widest text-brand-blue uppercase bg-white px-2 py-0.5 rounded border border-gray-200">
-                  {org.department}
-                </span>
-                <h4 className="font-extrabold text-gray-900 text-sm group-hover:text-brand-deep transition-colors">
-                  {language === 'pt' ? org.role : org.role_en}
-                </h4>
-                <p className="text-gray-500 text-xs leading-relaxed">
-                  {org.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 5. Strategic Partners */}
-        <div className="mb-24 py-12 border-t border-b border-gray-100">
-          <div className="max-w-xl mb-12 space-y-2">
-            <h3 className="text-2xl font-bold text-brand-deep">Parceiros Estratégicos</h3>
-            <p className="text-gray-500 text-xs">Trabalhamos em conjunto com entidades de alto nível para garantir o sucesso nacional.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {partners.map((partner, index) => (
-              <div key={index} className="p-6 bg-white border border-gray-100 rounded-2xl shadow-sm flex flex-col justify-between">
-                <div className="space-y-2">
-                  <h4 className="font-bold text-gray-900 text-base">{partner.name}</h4>
-                  <span className="text-[10px] uppercase font-mono font-bold text-brand-blue">
-                    {language === 'pt' ? partner.role_pt : partner.role_en}
-                  </span>
-                  <p className="text-gray-500 text-xs mt-2 leading-relaxed">
-                    {language === 'pt' ? partner.desc_pt : partner.desc_en}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 6. Differentials */}
-        <div className="space-y-8">
-          <div className="max-w-xl space-y-2">
-            <h3 className="text-2xl font-bold text-brand-deep">Diferenciais Competitivos</h3>
-            <p className="text-gray-500 text-xs">O que nos afasta do mercado tradicional e nos coloca como líderes.</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {differentials.map((diff, index) => (
-              <div key={index} className="p-5 bg-white border border-gray-100 rounded-2xl flex items-start gap-4">
-                <div className="p-2 bg-brand-blue/10 text-brand-blue rounded-xl shrink-0 mt-0.5">
-                  <CheckCircle2 className="w-5 h-5" />
-                </div>
-                <div className="space-y-1">
-                  <h4 className="font-bold text-gray-900 text-sm">{diff.title}</h4>
-                  <p className="text-gray-500 text-xs leading-relaxed">{diff.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
       </div>
     </div>
