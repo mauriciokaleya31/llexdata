@@ -1,0 +1,6 @@
+{
+  "name": "LEXDATA, LDA",
+  "description": "Website institucional da LEXDATA, LDA - Gestão Documental, Digitalização, Edição de Legislação e Soluções Tecnológicas para a Imprensa Nacional E.P.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

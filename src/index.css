@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Lora:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-deep: #004278;
+  --color-brand-blue: #16AADF;
+  --font-sans: "Lora", serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "Cinzel", serif;
+}
+
+@utility hero-gradient {
+  background: linear-gradient(135deg, #004278 0%, #16AADF 100%);
+}
+
+@utility service-card {
+  transition: all 0.3s ease;
+  border-left: 4px solid #16AADF;
+}
+
+@utility stat-bubble {
+  background: linear-gradient(135deg, #16AADF 0%, #004278 100%);
+}
+
+@utility glass {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+}

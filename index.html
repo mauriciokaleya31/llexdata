@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LEXDATA, LDA - Engenharia de Conteúdos e Gestão Documental</title>
+    <script>
+      // Shield against window.fetch being read-only/getter-only in sandboxed environments or extensions
+      (function() {
+        try {
+          var originalFetch = window.fetch;
+          var fetchValue = originalFetch;
+          var patch = {
+            get: function() {
+              return fetchValue;
+            },
+            set: function(val) {
+              fetchValue = val;
+            },
+            configurable: true,
+            enumerable: true
+          };
+          if (typeof window !== 'undefined') {
+            Object.defineProperty(window, 'fetch', patch);
+          }
+          if (typeof globalThis !== 'undefined') {
+            Object.defineProperty(globalThis, 'fetch', patch);
+          }
+          if (typeof self !== 'undefined') {
+            Object.defineProperty(self, 'fetch', patch);
+          }
+        } catch (e) {
+          console.warn("Fetch shield configuration bypassed:", e);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
