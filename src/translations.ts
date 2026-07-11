@@ -1,6 +1,6 @@
-import { LanguageDictionary } from './types';
+import { LanguageDictionary, Language } from './types';
 
-export const translations: Record<'pt' | 'en', LanguageDictionary> = {
+const baseTranslations: Record<'pt' | 'en', LanguageDictionary> = {
   pt: {
     nav: {
       home: "Início",
@@ -445,4 +445,126 @@ export const translations: Record<'pt' | 'en', LanguageDictionary> = {
       ownershipBadge: "Member of Imprensa Nacional - E.P. Group"
     }
   }
+};
+
+// Deep copy helper for LanguageDictionary
+function cloneDict(dict: LanguageDictionary): LanguageDictionary {
+  return JSON.parse(JSON.stringify(dict));
+}
+
+export const translations: Record<Language, LanguageDictionary> = {
+  pt: baseTranslations.pt,
+  en: baseTranslations.en,
+  es: (() => {
+    const d = cloneDict(baseTranslations.en);
+    d.nav = { home: "Inicio", about: "Sobre", services: "Servicios", platform: "Producto", projects: "Proyectos", contact: "Contacto" };
+    d.hero.title = "Transformación Digital y Gestión Documental Avanzada";
+    d.hero.subtitle = "Socio tecnológico oficial de la Imprensa Nacional E.P. de Angola, especializado en digitalización a gran escala, edición de legislación oficial y soluciones inteligentes de contenido.";
+    d.hero.ctaPrimary = "Conocer Plataforma";
+    d.hero.ctaSecondary = "Hablar con Especialista";
+    d.about.title = "Quiénes Somos";
+    d.about.subtitle = "Eficiencia, Rigor e Innovación Tecnológica en la Salvaguarda del Patrimonio Documental";
+    d.services.title = "Nuestros Servicios";
+    d.services.subtitle = "Soluciones integradas que cubren todo el ciclo de vida de la información";
+    d.contact.title = "Contacto";
+    return d;
+  })(),
+  fr: (() => {
+    const d = cloneDict(baseTranslations.en);
+    d.nav = { home: "Accueil", about: "À propos", services: "Services", platform: "Produit", projects: "Projets", contact: "Contact" };
+    d.hero.title = "Transformation Digitale et Gestion Documentaire Avancée";
+    d.hero.subtitle = "Partenaire technologique officiel de l'Imprensa Nacional E.P. d'Angola, spécialisé dans la numérisation à grande échelle, l'édition de législation officielle et les solutions de contenu intelligentes.";
+    d.hero.ctaPrimary = "Découvrir la Plateforme";
+    d.hero.ctaSecondary = "Parler à un Spécialiste";
+    d.about.title = "Qui Sommes-Nous";
+    d.about.subtitle = "Efficacité, Rigueur et Innovation Tactique pour la Sauvegarde du Patrimoine Documentaire";
+    d.services.title = "Nos Services";
+    d.services.subtitle = "Solutions intégrées couvrant tout le cycle de vie de l'information";
+    d.contact.title = "Contact";
+    return d;
+  })(),
+  zh: (() => {
+    const d = cloneDict(baseTranslations.en);
+    d.nav = { home: "首页", about: "关于我们", services: "服务", platform: "产品", projects: "项目", contact: "联系我们" };
+    d.hero.title = "数字化转型与先进文档管理";
+    d.hero.subtitle = "安哥拉国家印务局 (Imprensa Nacional E.P.) 官方技术合作伙伴，专注于大规模数字化、官方立法编辑及智能内容解决方案。";
+    d.hero.ctaPrimary = "了解平台";
+    d.hero.ctaSecondary = "联系专家";
+    d.about.title = "关于我们";
+    d.about.subtitle = "高效、严谨与技术创新，守护文献遗产";
+    d.services.title = "我们的服务";
+    d.services.subtitle = "覆盖信息生命周期的完整集成解决方案";
+    d.contact.title = "联系我们";
+    return d;
+  })(),
+  hi: (() => {
+    const d = cloneDict(baseTranslations.en);
+    d.nav = { home: "मुख्य पृष्ठ", about: "हमारे बारे में", services: "सेवाएँ", platform: "उत्पाद", projects: "परियोजनाएँ", contact: "संपर्क करें" };
+    d.hero.title = "डिजिटल परिवर्तन और उन्नत दस्तावेज़ प्रबंधन";
+    d.hero.subtitle = "अंगोला की राष्ट्रीय प्रेस (Imprensa Nacional E.P.) के आधिकारिक तकनीकी भागीदार, जो बड़े पैमाने पर डिजिटलीकरण, आधिकारिक कानून संपादन और बुद्धिमान सामग्री समाधानों में विशेषज्ञता रखते हैं।";
+    d.hero.ctaPrimary = "प्लेटफ़ॉर्म देखें";
+    d.hero.ctaSecondary = "विशेषज्ञ से बात करें";
+    d.about.title = "हमारे बारे में";
+    d.about.subtitle = "दस्तावेजी विरासत की सुरक्षा में दक्षता, कठोरता और तकनीकी नवाचार";
+    d.services.title = "हमारी सेवाएँ";
+    d.services.subtitle = "सूचना के संपूर्ण जीवन चक्र को कवर करने वाले एकीकृत समाधान";
+    d.contact.title = "संपर्क करें";
+    return d;
+  })(),
+  ar: (() => {
+    const d = cloneDict(baseTranslations.en);
+    d.nav = { home: "الرئيسية", about: "من نحن", services: "الخدمات", platform: "المنتج", projects: "المشاريع", contact: "اتصل بنا" };
+    d.hero.title = "التحول الرقمي وإدارة الوثائق المتقدمة";
+    d.hero.subtitle = "الشريك التكنولوجي الرسمي للمطبعة الوطنية (Imprensa Nacional E.P.) في أنغولا، والمتخصص في الرقمنة واسعة النطاق، وتحرير التشريعات الرسمية، وحلول المحتوى الذكية.";
+    d.hero.ctaPrimary = "اكتشف المنصة";
+    d.hero.ctaSecondary = "تحدث مع خبير";
+    d.about.title = "من نحن";
+    d.about.subtitle = "الكفاءة والدقة والابتكار التكنولوجي في حماية التراث الوثائقي";
+    d.services.title = "خدماتنا";
+    d.services.subtitle = "حلول متكاملة تغطي دورة حياة المعلومات بالكامل";
+    d.contact.title = "اتصل بنا";
+    return d;
+  })(),
+  de: (() => {
+    const d = cloneDict(baseTranslations.en);
+    d.nav = { home: "Startseite", about: "Über uns", services: "Dienstleistungen", platform: "Produkt", projects: "Projekte", contact: "Kontakt" };
+    d.hero.title = "Digitale Transformation und fortschrittliches Dokumentenmanagement";
+    d.hero.subtitle = "Offizieller Technologiepartner der Imprensa Nacional E.P. von Angola, spezialisiert auf großflächige Digitalisierung, Redaktion offizieller Gesetze und intelligente Inhaltslösungen.";
+    d.hero.ctaPrimary = "Plattform kennenlernen";
+    d.hero.ctaSecondary = "Mit Spezialist sprechen";
+    d.about.title = "Über uns";
+    d.about.subtitle = "Effizienz, Strenge und technologische Innovation bei der Sicherung des dokumentarischen Erbes";
+    d.services.title = "Unsere Dienstleistungen";
+    d.services.subtitle = "Integrierte Lösungen, die den gesamten Informationslebenszyklus abdecken";
+    d.contact.title = "Kontakt";
+    return d;
+  })(),
+  ru: (() => {
+    const d = cloneDict(baseTranslations.en);
+    d.nav = { home: "Главная", about: "О нас", services: "Услуги", platform: "Продукт", projects: "Проекты", contact: "Контакты" };
+    d.hero.title = "Цифровая трансформация и передовое управление документами";
+    d.hero.subtitle = "Официальный технологический партнер Национальной прессы Анголы (Imprensa Nacional E.P.), специализирующийся на крупномасштабной оцифровке, редактировании официального законодательства и интеллектуальных контент-решениях.";
+    d.hero.ctaPrimary = "Узнать о платформе";
+    d.hero.ctaSecondary = "Поговорить со специалистом";
+    d.about.title = "О нас";
+    d.about.subtitle = "Эффективность, строгость и технологические инновации в сохранении документального наследия";
+    d.services.title = "Наши услуги";
+    d.services.subtitle = "Интегрированные решения, охватывающие весь жизненный цикл информации";
+    d.contact.title = "Контакты";
+    return d;
+  })(),
+  it: (() => {
+    const d = cloneDict(baseTranslations.en);
+    d.nav = { home: "Home", about: "Chi Siamo", services: "Servizi", platform: "Prodotto", projects: "Progetti", contact: "Contatti" };
+    d.hero.title = "Trasformazione Digitale e Gestione Documentale Avanzata";
+    d.hero.subtitle = "Partner tecnologico ufficiale dell'Imprensa Nacional E.P. d'Angola, specializzato nella digitalizzazione su larga scala, nell'editing della legislazione ufficiale e in soluzioni di contenuto intelligenti.";
+    d.hero.ctaPrimary = "Scopri la Piattaforma";
+    d.hero.ctaSecondary = "Parla con uno Specialista";
+    d.about.title = "Chi Siamo";
+    d.about.subtitle = "Efficienza, Rigore e Innovazione Tecnologica nella Salvaguardia del Patrimonio Documentale";
+    d.services.title = "I Nostri Servizi";
+    d.services.subtitle = "Soluzioni integrate che coprono l'intero ciclo di vita delle informazioni";
+    d.contact.title = "Contatti";
+    return d;
+  })()
 };

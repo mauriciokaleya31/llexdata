@@ -3,18 +3,16 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { createServer as createViteServer } from "vite";
 
-// Support ES modules path resolution if needed
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
 
-  // Middleware to parse JSON body
   app.use(express.json());
 
-  // API routes (if any are needed in the future, defined first)
+  // API health route
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", message: "LEXDATA Server is running." });
   });
@@ -40,7 +38,7 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
+  app.listen(Number(PORT), "0.0.0.0", () => {
     console.log(`LEXDATA server running at http://0.0.0.0:${PORT}`);
   });
 }

@@ -133,4 +133,4 @@ export interface LanguageDictionary {
   };
 }
 
-export type Language = 'pt' | 'en';
+export type Language = 'pt' | 'en' | 'es' | 'fr' | 'zh' | 'hi' | 'ar' | 'de' | 'ru' | 'it';

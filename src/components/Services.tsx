@@ -718,37 +718,41 @@ export default function Services({ language }: ServicesProps) {
                 )}
 
                 {/* Benefits */}
-                <div className="space-y-4">
-                  <h4 className="font-extrabold text-gray-900 text-sm flex items-center gap-2">
-                    <ShieldCheck className="w-4.5 h-4.5 text-brand-blue" />
-                    Principais Benefícios Estratégicos
-                  </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {selectedService.benefits.map((benefit, idx) => (
-                      <div key={idx} className="p-4 border border-gray-100 rounded-xl flex items-start gap-3 bg-white hover:border-brand-blue/30 transition-all">
-                        <CheckCircle className="w-4 h-4 text-brand-blue mt-0.5 shrink-0" />
-                        <span className="text-xs text-gray-600 leading-normal">{benefit}</span>
-                      </div>
-                    ))}
+                {selectedService.benefits && (
+                  <div className="space-y-4">
+                    <h4 className="font-extrabold text-gray-900 text-sm flex items-center gap-2">
+                      <ShieldCheck className="w-4.5 h-4.5 text-brand-blue" />
+                      Principais Benefícios Estratégicos
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {selectedService.benefits.map((benefit, idx) => (
+                        <div key={idx} className="p-4 border border-gray-100 rounded-xl flex items-start gap-3 bg-white hover:border-brand-blue/30 transition-all">
+                          <CheckCircle className="w-4 h-4 text-brand-blue mt-0.5 shrink-0" />
+                          <span className="text-xs text-gray-600 leading-normal">{benefit}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Process Workflow Steps */}
-                <div className="space-y-4">
-                  <h4 className="font-extrabold text-gray-900 text-sm flex items-center gap-2">
-                    <Layers className="w-4.5 h-4.5 text-brand-blue" />
-                    Como Funciona o Processo
-                  </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                    {selectedService.process.map((p, idx) => (
-                      <div key={idx} className="p-4 bg-gray-50 border border-gray-100 rounded-xl space-y-2 relative">
-                        <div className="text-[10px] font-mono font-bold text-brand-blue uppercase">{p.step.split('.')[0]}</div>
-                        <h5 className="font-bold text-xs text-brand-deep">{p.step.split('.')[1] || p.step}</h5>
-                        <p className="text-[10px] text-gray-500 leading-normal">{p.desc}</p>
-                      </div>
-                    ))}
+                {selectedService.process && (
+                  <div className="space-y-4">
+                    <h4 className="font-extrabold text-gray-900 text-sm flex items-center gap-2">
+                      <Layers className="w-4.5 h-4.5 text-brand-blue" />
+                      Como Funciona o Processo
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                      {selectedService.process.map((p, idx) => (
+                        <div key={idx} className="p-4 bg-gray-50 border border-gray-100 rounded-xl space-y-2 relative">
+                          <div className="text-[10px] font-mono font-bold text-brand-blue uppercase">{p.step.split('.')[0]}</div>
+                          <h5 className="font-bold text-xs text-brand-deep">{p.step.split('.')[1] || p.step}</h5>
+                          <p className="text-[10px] text-gray-500 leading-normal">{p.desc}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Contact CTA Card */}
                 <div className="p-8 bg-slate-950 text-white rounded-2xl relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6">
