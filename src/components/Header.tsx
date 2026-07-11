@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Languages, Building2, ChevronRight, ArrowUpRight, Search, LayoutGrid, Lock, Mail, User, CheckCircle, ArrowRight, ChevronDown } from 'lucide-react';
+import { Menu, X, Languages, ArrowUpRight, ChevronDown, Building2 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Language } from '../types';
 import { translations } from '../translations';
@@ -156,24 +156,6 @@ export default function Header({ activeTab, setActiveTab, language, setLanguage 
             >
               <span>{language === 'pt' ? 'Login/Criar' : 'Login/Create'}</span>
               <ArrowUpRight className="w-4 h-4" />
-            </button>
-
-            {/* Decorative Search Button */}
-            <button
-              onClick={() => handleNavClick('contact')}
-              className="p-2.5 text-gray-500 hover:text-brand-blue hover:bg-gray-50 rounded-full transition-colors cursor-pointer"
-              aria-label="Search"
-            >
-              <Search className="w-4 h-4" />
-            </button>
-
-            {/* Decorative Grid Menu Button */}
-            <button
-              onClick={() => handleNavClick('services')}
-              className="p-2.5 text-gray-500 hover:text-brand-blue hover:bg-gray-50 rounded-full transition-colors cursor-pointer"
-              aria-label="Menu Grid"
-            >
-              <LayoutGrid className="w-4 h-4" />
             </button>
           </div>
 
