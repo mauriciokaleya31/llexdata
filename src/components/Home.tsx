@@ -8,6 +8,16 @@ import {
 } from 'lucide-react';
 import { Language } from '../types';
 
+import workspaceScanning from '../assets/images/regenerated_image_1783753906385.png';
+import workspaceImg1 from '../assets/images/regenerated_image_1783754333694.png';
+import workspaceImg2 from '../assets/images/regenerated_image_1783754337971.png';
+import workspaceImg3 from '../assets/images/regenerated_image_1783754346264.png';
+import workspaceImg4 from '../assets/images/regenerated_image_1783754339998.png';
+import workspaceImg5 from '../assets/images/regenerated_image_1783754627267.png';
+import workspaceImg6 from '../assets/images/regenerated_image_1783754651963.png';
+import workspaceImg7 from '../assets/images/regenerated_image_1783754342182.png';
+import workspaceImg8 from '../assets/images/regenerated_image_1783754344326.png';
+
 interface HomeProps {
   language: Language;
   setActiveTab: (tab: string) => void;
@@ -556,7 +566,7 @@ export default function Home({ language, setActiveTab }: HomeProps) {
               {/* Front Overlapping Image Frame */}
               <div className="w-[80%] aspect-[4/3] rounded-2xl overflow-hidden border-4 border-white shadow-2xl absolute right-0 bottom-0 z-10">
                 <img 
-                  src="/src/assets/images/regenerated_image_1783753906385.png" 
+                  src={workspaceScanning} 
                   alt="Specialized Scanning Workflow" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
@@ -1527,10 +1537,10 @@ export default function Home({ language, setActiveTab }: HomeProps) {
               className="space-y-4"
             >
               <div className="rounded-2xl overflow-hidden aspect-square shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src="/src/assets/images/regenerated_image_1783754333694.png" referrerPolicy="no-referrer" alt="Workspace 1" className="w-full h-full object-cover" />
+                <img src={workspaceImg1} referrerPolicy="no-referrer" alt="Workspace 1" className="w-full h-full object-cover" />
               </div>
               <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src="/src/assets/images/regenerated_image_1783754337971.png" referrerPolicy="no-referrer" alt="Workspace 2" className="w-full h-full object-cover" />
+                <img src={workspaceImg2} referrerPolicy="no-referrer" alt="Workspace 2" className="w-full h-full object-cover" />
               </div>
             </motion.div>
 
@@ -1542,10 +1552,10 @@ export default function Home({ language, setActiveTab }: HomeProps) {
               className="space-y-4 pt-6 md:pt-12"
             >
               <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src="/src/assets/images/regenerated_image_1783754346264.png" referrerPolicy="no-referrer" alt="Workspace 3" className="w-full h-full object-cover" />
+                <img src={workspaceImg3} referrerPolicy="no-referrer" alt="Workspace 3" className="w-full h-full object-cover" />
               </div>
               <div className="rounded-2xl overflow-hidden aspect-square shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src="/src/assets/images/regenerated_image_1783754339998.png" referrerPolicy="no-referrer" alt="Workspace 4" className="w-full h-full object-cover" />
+                <img src={workspaceImg4} referrerPolicy="no-referrer" alt="Workspace 4" className="w-full h-full object-cover" />
               </div>
             </motion.div>
 
@@ -1557,10 +1567,10 @@ export default function Home({ language, setActiveTab }: HomeProps) {
               className="space-y-4"
             >
               <div className="rounded-2xl overflow-hidden aspect-square shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src="/src/assets/images/regenerated_image_1783754627267.png" referrerPolicy="no-referrer" alt="Workspace 5" className="w-full h-full object-cover" />
+                <img src={workspaceImg5} referrerPolicy="no-referrer" alt="Workspace 5" className="w-full h-full object-cover" />
               </div>
               <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src="/src/assets/images/regenerated_image_1783754651963.png" referrerPolicy="no-referrer" alt="Workspace 6" className="w-full h-full object-cover" />
+                <img src={workspaceImg6} referrerPolicy="no-referrer" alt="Workspace 6" className="w-full h-full object-cover" />
               </div>
             </motion.div>
 
@@ -1572,10 +1582,10 @@ export default function Home({ language, setActiveTab }: HomeProps) {
               className="space-y-4 pt-6 md:pt-12"
             >
               <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src="/src/assets/images/regenerated_image_1783754342182.png" referrerPolicy="no-referrer" alt="Workspace 7" className="w-full h-full object-cover" />
+                <img src={workspaceImg7} referrerPolicy="no-referrer" alt="Workspace 7" className="w-full h-full object-cover" />
               </div>
               <div className="rounded-2xl overflow-hidden aspect-square shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <img src="/src/assets/images/regenerated_image_1783754344326.png" referrerPolicy="no-referrer" alt="Workspace 8" className="w-full h-full object-cover" />
+                <img src={workspaceImg8} referrerPolicy="no-referrer" alt="Workspace 8" className="w-full h-full object-cover" />
               </div>
             </motion.div>
           </div>
